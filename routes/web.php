@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\LoanPackageController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,3 +22,6 @@ Route::get('/dashboard', function () {
 Route::get('/registers', [AuthController::class, 'registers'])->name('auth.register');
 Route::post('/handlle-register', [AuthController::class, 'handlleRegister'])->name('auth.handlle-register');
 Route::get('user-index',[UserController::class, 'index'])->name('user-index');
+Route::get('loan-index',[LoanPackageController::class, 'index'])->name('loan.index');
+Route::get('approval/{id}',[LoanPackageController::class, 'approval'])->name('loan.approval');
+Route::get('reject/{id}',[LoanPackageController::class, 'reject'])->name('loan.reject');

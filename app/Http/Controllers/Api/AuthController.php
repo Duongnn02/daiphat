@@ -50,9 +50,17 @@ class AuthController extends Controller
 
     public function uploadCmnd(Request $request, $id)
     {
+        // $validated = $request->validate([
+        //     'name' => 'required',
+        //     'cccd_cmnd' => 'required',
+        //     'before_cccd_cmnd' => 'required',
+        //     'after_cccd_cmnd' => 'required',
+        //     'face_cccd_cmnd' => 'required',
+        // ]);
         $user = User::findOrFail($id);
-        $user->name = $request->name;
-        $user->cccd_cmnd = $request->cccd_cmnd;
+
+        // $user->name = $request->name;
+        // $user->cccd_cmnd = $request->cccd_cmnd;
 
         if ($request->hasFile('before_cccd_cmnd')) {
             $user->before_cccd_cmnd = $this->uploadFile($request->before_cccd_cmnd, 'cccd');
@@ -63,8 +71,18 @@ class AuthController extends Controller
         if ($request->hasFile('face_cccd_cmnd')) {
             $user->face_cccd_cmnd = $this->uploadFile($request->face_cccd_cmnd, 'cccd');
         }
-
-        $user->save();
+        $data = [
+            'name' => $request->name,
+            'cccd_cmnd' => $request->cccd_cmnd,
+            'before_cccd_cmnd' => $user->before_cccd_cmnd,
+            'after_cccd_cmnd' => $user->after_cccd_cmnd,
+            'face_cccd_cmnd' => $user->face_cccd_cmnd
+        ];
+        if ($user->update($data)) {
+            $user->update([
+                'status_cmnd' => 1
+            ]);
+        }
         return response()->json(['data' => $user, 'message' => 'Hoàn thành'], 200);
     }
 }

@@ -36,6 +36,11 @@ return new class extends Migration
             $table->string('bank')->nullable();
             $table->string('number_bank')->nullable();
             $table->string('signature')->nullable();
+            $table->integer('status_cmnd')->nullable();
+            $table->integer('status_infor')->nullable();
+            $table->integer('status_bank')->nullable();
+            $table->integer('status_signature')->nullable();
+            $table->integer('status_additional')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

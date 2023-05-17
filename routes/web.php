@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/dashboard', function () {
+    return view('content.dashboard');
 });
+Route::get('/registers', [AuthController::class, 'registers'])->name('auth.register');
+Route::post('/handlle-register', [AuthController::class, 'handlleRegister'])->name('auth.handlle-register');
+Route::get('user-index',[UserController::class, 'index'])->name('user-index');

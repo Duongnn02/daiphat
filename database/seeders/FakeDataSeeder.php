@@ -16,7 +16,7 @@ class FakeDataSeeder extends Seeder
     {
         $data = [3, 8, 9];
         $fakeData = new FakeData();
-        for ($i = 0; $i < 50; $i++) {
+        for ($i = 0; $i < 200; $i++) {
             $item = [
                 'phone' => 0 . Arr::random($data) . rand(0, 9) . '***' . rand(0, 9) . rand(0, 9) . rand(0, 9),
                 'money' => rand(1, 9) . rand(0, 9) . '.000' . '.0000' . '₫',

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Events\MessageSent;
+use App\Events\SendMessage;
+use App\Http\Controllers\Controller;
 use App\Models\Message;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -36,12 +36,12 @@ class MessageController extends Controller
         ];
 
         $data = $request->only($input);
-        $data['from_user'] = Auth::user()->id;
+        $data['from_user'] = Auth::id();
         $data['to_user'] = 1;
         $message = Message::create($data);
 
-        event(new MessageSent($message));
-
-        return response()->json($message, 201);
+        $getMessage = event(new SendMessage($message));
+        dd($getMessage);
+        return response()->json($getMessage, 201);
     }
 }

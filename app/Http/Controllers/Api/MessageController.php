@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Enums\CodeStatusEnum;
 use App\Events\NewChatMessage;
 use App\Events\SendMessage;
 use App\Http\Controllers\Controller;
@@ -15,14 +16,14 @@ class MessageController extends Controller
     {
         $admin =  1;
         if (Auth::user()->role_id == $admin) {
-           $messages = Message::where('status', 0)->with(['user' => function($query)  {
+            $messages = Message::where('status', 0)->with(['user' => function ($query) {
                 $query->select('id', 'name');
-           }])->get();
-        }else {
+            }])->get();
+        } else {
             $userId = Auth::user()->id;
-            $messages = Message::where('from_user', $userId)->with(['user' => function($query)  {
+            $messages = Message::where('from_user', $userId)->with(['user' => function ($query) {
                 $query->select('id', 'name');
-           }])->get();
+            }])->get();
         }
 
         return response()->json($messages, 200);
@@ -31,13 +32,18 @@ class MessageController extends Controller
     public function store(Request $request)
     {
         $message = new Message();
-        $message->from_user =Auth::id();
-        $message->to_user = 1;
+        $message->from_user = Auth::id();
+        $message->to_user = Message::TO_ADMIN;
         $message->message = $request->get('message');
         $message->save();
 
-        event(new SendMessage($message));
+        broadcast(new SendMessage($message))->toOthers();
 
-        return response()->json($message, 201);
+        return response()->json(
+            [
+                'message' => $message,
+                'status' => CodeStatusEnum::SUCCESS
+            ],201
+        );
     }
 }

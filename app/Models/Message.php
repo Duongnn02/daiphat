@@ -10,7 +10,8 @@ class Message extends Model
     use HasFactory;
     protected $fillable = ['from_user', 'to_user', 'message', 'status'];
     protected $table ='messages';
-    
+
+    const TO_ADMIN = 1;
     public function user()
     {
         return $this->belongsTo(User::class);

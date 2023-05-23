@@ -1,0 +1,29 @@
+<?php
+
+namespace App\Listeners;
+
+use App\Events\NewChatMessage;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
+
+class SendChatMessageNotification
+{
+    /**
+     * Create the event listener.
+     */
+    public function __construct()
+    {
+        //
+    }
+
+    /**
+     * Handle the event.
+     */
+    public function handle(NewChatMessage $event): void
+    {
+        // Lưu tin nhắn vào cơ sở dữ liệu
+
+        // Gửi sự kiện thông báo đến các client đang lắng nghe
+        broadcast(new NewChatMessage($event->message))->toOthers();
+    }
+}

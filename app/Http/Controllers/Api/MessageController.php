@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\NewChatMessage;
 use App\Events\SendMessage;
 use App\Http\Controllers\Controller;
 use App\Models\Message;
@@ -19,7 +20,7 @@ class MessageController extends Controller
            }])->get();
         }else {
             $userId = Auth::user()->id;
-            $messages = Message::where('user_id', $userId)->with(['user' => function($query)  {
+            $messages = Message::where('from_user', $userId)->with(['user' => function($query)  {
                 $query->select('id', 'name');
            }])->get();
         }
@@ -29,19 +30,14 @@ class MessageController extends Controller
 
     public function store(Request $request)
     {
-        $input = [
-            'message',
-            'from_user',
-            'to_user'
-        ];
+        $message = new Message();
+        $message->from_user =Auth::id();
+        $message->to_user = 1;
+        $message->message = $request->get('message');
+        $message->save();
 
-        $data = $request->only($input);
-        $data['from_user'] = Auth::id();
-        $data['to_user'] = 1;
-        $message = Message::create($data);
+        event(new SendMessage($message));
 
-        $getMessage = event(new SendMessage($message));
-        dd($getMessage);
-        return response()->json($getMessage, 201);
+        return response()->json($message, 201);
     }
 }

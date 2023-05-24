@@ -72,4 +72,9 @@ class User extends Authenticatable
     {
         return $this->HasMany(Message::class, 'from_user', 'id');
     }
+
+    public function loans()
+    {
+        return $this->HasMany(LoanPackage::class, 'user_id', 'id');
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\LoanPackage;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -84,7 +85,7 @@ class LoanPackageController extends Controller
     {
         $loan = LoanPackage::findOrFail($id);
 
-        $status = match($loan->status) {
+        $status = match ($loan->status) {
             0 => 2,
             1 => 2,
             2 => 2
@@ -94,13 +95,12 @@ class LoanPackageController extends Controller
             'status' => $status
         ]);
         return back();
-
     }
     public function reject($id)
     {
         $loan = LoanPackage::findOrFail($id);
 
-        $status = match($loan->status) {
+        $status = match ($loan->status) {
             0 => 1,
             2 => 1,
             1 => 1
@@ -110,5 +110,17 @@ class LoanPackageController extends Controller
             'status' => $status
         ]);
         return back();
+    }
+
+    public function getMoneyLoan($userId)
+    {
+        $loans = LoanPackage::where('status', LoanPackage::APPROVALED)
+            ->where('user_id', $userId)
+            ->get();
+
+            $sum = 0;
+            foreach ($loans as $loan) {
+                $sum += $loan->total_loan;
+            }
     }
 }

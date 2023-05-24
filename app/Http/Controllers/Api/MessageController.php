@@ -15,32 +15,33 @@ class MessageController extends Controller
 {
     public function index()
     {
-        $admin = 1;
         $users = '';
-        if (Auth::user()->role_id == $admin) {
+        if (Auth::user()->role_id == User::IS_ADMIN) {
             $messages = Message::with([
                 'user' => function ($query) {
                     $query->select('id', 'name', 'phone');
-                }])->get();
+                }
+            ])->get();
             $users = User::withCount('messages')
                 ->where('id', '!=', User::IS_ADMIN)
                 ->having('messages_count', '>', 0)
                 ->get();
         } else {
             $userId = Auth::user()->id;
-            $messages = Message::where('from_user', $userId)->with(['user' => function ($query) {
-                $query->select('id', 'name');
-            }])->get();
+            $messages = Message::where('from_user', $userId)
+                ->with(['user' => function ($query) {
+                    $query->select('id', 'name');
+                }])->get();
         }
 
         return response()->json(['messages' => $messages, 'users' => $users], 200);
     }
 
-    public function store($userId, Request $request)
+    public function store(Request $request)
     {
         $message = new Message();
         $message->from_user = Auth::id();
-        $message->to_user = Auth::user()->id != User::IS_ADMIN ? User::IS_ADMIN : $userId;
+        $message->to_user = $request->to_user;
         $message->message = $request->get('message');
         $message->save();
 
@@ -50,7 +51,8 @@ class MessageController extends Controller
             [
                 'message' => $message,
                 'status' => CodeStatusEnum::SUCCESS
-            ], 201
+            ],
+            201
         );
     }
 
@@ -60,11 +62,11 @@ class MessageController extends Controller
             return response()->json(CodeStatusEnum::ERROR, 400);
         }
         $message = Message::where('from_user', $userId)
-                ->orWhere(function ($query) use ($userId) {
-                    $query->where('from_user', User::IS_ADMIN)->where('to_user', $userId);
-                })->get();
+            ->orWhere(function ($query) use ($userId) {
+                $query->where('from_user', User::IS_ADMIN)
+                    ->where('to_user', $userId);
+            })->get();
         $user = User::select('id', 'name', 'phone')->where('id', $userId)->first();
         return response()->json(['message' => $message, 'user' => $user], 200);
-
     }
 }

@@ -26,6 +26,7 @@ Route::post('register', [AuthController::class, 'register']);
 Route::get('data-customer', [FakeDataController::class, 'index']);
 Route::post('login', [AuthController::class, 'login']);
 
+Route::get('getMoneyLoan/{id}', [LoanPackageController::class, 'getMoneyLoan']);
 Route::group(['middleware' => ['auth:api']], function () {
     Route::post('uploadCmnd/{id}', [AuthController::class, 'uploadCmnd']);
     Route::post('loan-store', [LoanPackageController::class, 'store']);

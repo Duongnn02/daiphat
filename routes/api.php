@@ -32,5 +32,6 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::get('user/{id}', [UserController::class, 'show']);
     Route::post('messages', [MessageController::class, 'store']);
     Route::get('messages', [MessageController::class, 'index']);
+    Route::get('messages/show/{id}', [MessageController::class, 'show']);
 
 });

@@ -66,4 +66,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    const IS_ADMIN = 1;
+
+    public function messages()
+    {
+        return $this->HasMany(Message::class, 'from_user', 'id');
+    }
 }

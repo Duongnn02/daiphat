@@ -122,5 +122,6 @@ class LoanPackageController extends Controller
             foreach ($loans as $loan) {
                 $sum += $loan->total_loan;
             }
+        return response()->json(['loan' => $loans, 'sum' => $sum], 200);
     }
 }

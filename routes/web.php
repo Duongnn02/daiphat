@@ -25,3 +25,7 @@ Route::get('user-index',[UserController::class, 'index'])->name('user-index');
 Route::get('loan-index',[LoanPackageController::class, 'index'])->name('loan.index');
 Route::get('approval/{id}',[LoanPackageController::class, 'approval'])->name('loan.approval');
 Route::get('reject/{id}',[LoanPackageController::class, 'reject'])->name('loan.reject');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

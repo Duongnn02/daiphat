@@ -31,8 +31,9 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::post('uploadCmnd/{id}', [AuthController::class, 'uploadCmnd']);
     Route::post('loan-store', [LoanPackageController::class, 'store']);
     Route::get('user/{id}', [UserController::class, 'show']);
+    Route::get('loan/{id}', [LoanPackageController::class, 'show']);
     Route::post('messages', [MessageController::class, 'store']);
-    Route::get('messages', [MessageController::class, 'index']);
+    Route::get('messages/{id}', [MessageController::class, 'index']);
     Route::get('messages/show/{id}', [MessageController::class, 'show']);
     Route::get('get-money-loan/{id}', [LoanPackageController::class, 'getMoneyLoan']);
 

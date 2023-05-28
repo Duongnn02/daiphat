@@ -16,16 +16,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/dashboard', function () {
-    return view('content.dashboard');
+Route::middleware(['auth'])->group(function () {
+Route::middleware(['admin'])->group(function () {
+    Route::get('/registers', [AuthController::class, 'registers'])->name('auth.register');
+    Route::post('/handlle-register', [AuthController::class, 'handlleRegister'])->name('auth.handlle-register');
+    Route::get('loan-index', [LoanPackageController::class, 'index'])->name('loan.index');
+    Route::get('approval/{id}', [LoanPackageController::class, 'approval'])->name('loan.approval');
+    Route::get('reject/{id}', [LoanPackageController::class, 'reject'])->name('loan.reject');
+    Route::get('loan/edit/{id}', [LoanPackageController::class, 'edit'])->name('loan.edit');
+    Route::put('loan/update/{id}', [LoanPackageController::class, 'update'])->name('loan.update');
+    Route::delete('loan/delete/{id}', [LoanPackageController::class, 'destroy'])->name('loan.destroy');
+    Route::resource('user', UserController::class);
+
+    Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('dashboard');
 });
-Route::get('/registers', [AuthController::class, 'registers'])->name('auth.register');
-Route::post('/handlle-register', [AuthController::class, 'handlleRegister'])->name('auth.handlle-register');
-Route::get('user-index',[UserController::class, 'index'])->name('user-index');
-Route::get('loan-index',[LoanPackageController::class, 'index'])->name('loan.index');
-Route::get('approval/{id}',[LoanPackageController::class, 'approval'])->name('loan.approval');
-Route::get('reject/{id}',[LoanPackageController::class, 'reject'])->name('loan.reject');
-
+});
 Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

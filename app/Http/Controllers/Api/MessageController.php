@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 
 class MessageController extends Controller
 {
-    public function index()
+    public function index($userId)
     {
         $users = '';
         if (Auth::user()->role_id == User::IS_ADMIN) {
@@ -23,7 +23,7 @@ class MessageController extends Controller
                 }
             ])->get();
             $users = User::withCount('messages')
-                ->where('id', '!=', User::IS_ADMIN)
+                ->where('id', '!=', $userId)
                 ->having('messages_count', '>', 0)
                 ->get();
         } else {

@@ -47,6 +47,7 @@ class User extends Authenticatable
         'status_bank',
         'status_signature',
         'status_additional',
+        'role_id'
     ];
     /**
      * The attributes that should be hidden for serialization.
@@ -76,5 +77,11 @@ class User extends Authenticatable
     public function loans()
     {
         return $this->HasMany(LoanPackage::class, 'user_id', 'id');
+    }
+
+
+    public static function  getInput($model)
+    {
+        return $model->fillable;
     }
 }

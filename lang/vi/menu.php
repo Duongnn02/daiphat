@@ -10,8 +10,7 @@ return [
     'Payment' => 'Thanh toán',
     'Prepare_the_bill' => 'Tính tiền',
     'Account' => 'Tài khoản',
-    'Infor' => 'Thông tin',
-    'Forgot_password' => 'Thông tin',
+    'Forgot_password' => 'Đổi mật khẩu',
     'Create_account' => 'Tạo tài khoản',
     'Support' => 'Hỗ trợ',
 ];

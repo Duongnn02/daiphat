@@ -38,6 +38,7 @@ class User extends Authenticatable
         'phone_family',
         'additional_information',
         'account_name',
+        'role_id',
         'bank',
         'account_name',
         'number_bank',
@@ -47,7 +48,6 @@ class User extends Authenticatable
         'status_bank',
         'status_signature',
         'status_additional',
-        'role_id'
     ];
     /**
      * The attributes that should be hidden for serialization.

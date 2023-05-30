@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\UploadFileTrait;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -84,5 +85,25 @@ class AuthController extends Controller
             ]);
         }
         return response()->json(['data' => $user, 'message' => 'Hoàn thành'], 200);
+    }
+
+    public function changePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|string|min:8',
+        ]);
+
+        $user = Auth::user();
+        $credentials = request('current_password');
+        if (Auth::attempt($current_password)) {
+        if (Hash::check($request->current_password, $user->password)) {
+            $user->password = Hash::make($request->new_password);
+            $user->save();
+
+            return response()->json(['user' => $user, 'message' => 'Thay đổi thành công vui lòng đăng nhập lại']);
+        } else {
+            return back()->withErrors(['message' => 'mật khẩu không chính xác']);
+        }
     }
 }

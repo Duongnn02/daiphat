@@ -147,6 +147,7 @@ class LoanPackageController extends Controller
             foreach ($loans as $loan) {
                 $sum += $loan->total_loan;
             }
-        return response()->json(['loans' => $loans, 'sum' => $sum], 200);
+            $user = User::where('id', $userId)->first();
+        return response()->json(['loans' => $loans, 'sum' => $sum, 'user' => $user], 200);
     }
 }

@@ -29,6 +29,7 @@ Route::post('login', [AuthController::class, 'login']);
 Route::get('getMoneyLoan/{id}', [LoanPackageController::class, 'getMoneyLoan']);
 Route::group(['middleware' => ['auth:api']], function () {
     Route::post('uploadCmnd/{id}', [AuthController::class, 'uploadCmnd']);
+    Route::post('change-password', [AuthController::class, 'changePassword']);
     Route::post('loan-store', [LoanPackageController::class, 'store']);
     Route::get('user/{id}', [UserController::class, 'show']);
     Route::get('loan/{id}', [LoanPackageController::class, 'show']);

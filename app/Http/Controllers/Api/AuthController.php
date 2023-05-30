@@ -22,8 +22,17 @@ class AuthController extends Controller
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
 
-        $token = $user->createToken('Token Name')->accessToken;
-        return response()->json(['token' => $token], 200);
+        $tokenResult = $user->createToken('Myapp');
+        $token = $tokenResult->token;
+
+        return response()->json([
+            'user' => $user,
+            'access_token' => $tokenResult->accessToken,
+            'token_type' => 'Bearer',
+            'expires_at' => Carbon::parse(
+                $tokenResult->token->expires_at
+            )->toDateTimeString()
+        ], 200);
     }
 
     public function login(Request $request)
@@ -31,7 +40,7 @@ class AuthController extends Controller
         $credentials = request(['phone', 'password']);
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
-            $tokenResult =  $user->createToken('Myapp');
+            $tokenResult = $user->createToken('Myapp');
             $token = $tokenResult->token;
             if ($request->remember_me)
                 $token->expires_at = Carbon::now()->addWeeks(1);
@@ -59,9 +68,6 @@ class AuthController extends Controller
         //     'face_cccd_cmnd' => 'required',
         // ]);
         $user = User::findOrFail($id);
-
-        // $user->name = $request->name;
-        // $user->cccd_cmnd = $request->cccd_cmnd;
 
         if ($request->hasFile('before_cccd_cmnd')) {
             $user->before_cccd_cmnd = $this->uploadFile($request->before_cccd_cmnd, 'cccd');
@@ -95,15 +101,14 @@ class AuthController extends Controller
         ]);
 
         $user = Auth::user();
-        $credentials = request('current_password');
-        if (Auth::attempt($current_password)) {
-        if (Hash::check($request->current_password, $user->password)) {
-            $user->password = Hash::make($request->new_password);
-            $user->save();
+            if (Hash::check($request->current_password, $user->password)) {
+                User::whereId(auth()->user()->id)->update([
+                    'password' => Hash::make($request->new_password)
+                ]);
 
-            return response()->json(['user' => $user, 'message' => 'Thay đổi thành công vui lòng đăng nhập lại']);
-        } else {
-            return back()->withErrors(['message' => 'mật khẩu không chính xác']);
-        }
+                return response()->json(['user' => $user, 'message' => 'Thay đổi thành công vui lòng đăng nhập lại']);
+            } else {
+                return response()->json(['message' => 'mật khẩu không chính xác']);
+            }
     }
 }

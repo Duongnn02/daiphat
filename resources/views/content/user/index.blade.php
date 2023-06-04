@@ -1,7 +1,23 @@
 @extends('main')
 @section('content')
 <div class="card">
-    <h5 class="card-header">Người dùng</h5>
+     <div class="loan-index d-flex row">
+            <div class="title-loan col-md-3">
+                <h5 class="card-header">Người dùng</h5>
+            </div>
+            <div class="col-md-9">
+                <form action="" class="row">
+                    <div class="input-group input-group-merge col-md-4 search-loan">
+                        <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
+                        <input type="text" class="form-control" value="{{request()->key_word}}" name="key_word" placeholder="Tìm kiếm theo tên số điện thoại" aria-label="Search..."
+                            aria-describedby="basic-addon-search31">
+                    </div>
+                    <div class="btn-search col-md-2">
+                        <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     <div class="table-responsive text-nowrap">
       <table class="table">
         <thead class="table-dark">
@@ -34,6 +50,12 @@
         @endif
 
         </tbody>
+        <div class="row">
+            <div class="col-md-5 offset-md-7">
+                <div class="btn-group float-end">
+                    {{ $users->appends(request()->key_word)->links() }} </div>
+            </div>
+        </div>
       </table>
     </div>
   </div>

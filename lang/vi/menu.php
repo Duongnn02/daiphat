@@ -5,7 +5,7 @@ return [
     'General_management' => 'Quản lý chung',
     'User' => 'Người dùng',
     'Loan' => 'Khoản vay',
-    'Service' => 'Dịch vụ',
+    'Logo' => 'Logo',
     'Settings' => 'Thiết lập',
     'Payment' => 'Thanh toán',
     'Prepare_the_bill' => 'Tính tiền',

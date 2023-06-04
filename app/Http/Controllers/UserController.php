@@ -20,9 +20,17 @@ class UserController extends Controller
         $this->listRoute = redirect()->route('user.index');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::latest()->paginate(10);
+        $search = $request->get('key_word');
+        $perPage = 15;
+
+        $users = User::where(function ($query) use ($search) {
+            $query->where('name', 'LIKE', '%' . $search . '%')
+                ->orWhere('phone', 'LIKE', '%' . $search . '%');
+        })
+            ->latest()
+            ->paginate($perPage);
         return view('content.user.index', compact('users'));
     }
 

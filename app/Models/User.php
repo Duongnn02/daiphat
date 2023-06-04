@@ -50,6 +50,9 @@ class User extends Authenticatable
         'status_bank',
         'status_signature',
         'status_additional',
+        'relationship_other',
+        'full_name_other',
+        'phone_other'
     ];
     /**
      * The attributes that should be hidden for serialization.

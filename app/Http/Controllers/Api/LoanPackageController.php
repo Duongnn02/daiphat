@@ -21,12 +21,20 @@ class LoanPackageController extends Controller
         $this->listRoute = redirect()->route('loan.index');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $loans = LoanPackage::with(['user' => function ($query) {
-            $query->select('id', 'name');
-        }])->latest()->paginate(10);
+        $search = $request->get('key_word');
+        $perPage = 15;
 
+        $loans = LoanPackage::with('user')
+            ->whereHas('user', function ($query) use ($search) {
+                $query->where(function ($query) use ($search) {
+                    $query->where('name', 'LIKE', '%' . $search . '%')
+                        ->orWhere('phone', 'LIKE', '%' . $search . '%');
+                });
+            })
+            ->orderBy('id', 'DESC')
+            ->paginate($perPage);
 
         return view('content.loan.index', compact('loans'));
     }
@@ -50,11 +58,11 @@ class LoanPackageController extends Controller
             'time',
             'status',
             'recurring_payment',
-            'contract_number'
+            'contract_number',
         ];
         $data = $request->only($input);
         $data['user_id'] = Auth::user()->id;
-        $data['contract_number'] = rand(1111111111,9999999999);
+        $data['contract_number'] = rand(1111111111, 9999999999);
         $loans = LoanPackage::create($data);
         return response()->json(['loans' => $loans, 'message' => 'success'], 200);
     }
@@ -74,7 +82,7 @@ class LoanPackageController extends Controller
     public function edit($id)
     {
         $loan = LoanPackage::findOrFail($id);
-        return view('content.loan.edit',compact('loan'));
+        return view('content.loan.edit', compact('loan'));
     }
 
     /**
@@ -143,11 +151,11 @@ class LoanPackageController extends Controller
             ->where('user_id', $userId)
             ->get();
 
-            $sum = 0;
-            foreach ($loans as $loan) {
-                $sum += $loan->total_loan;
-            }
-            $user = User::where('id', $userId)->first();
+        $sum = 0;
+        foreach ($loans as $loan) {
+            $sum += $loan->total_loan;
+        }
+        $user = User::where('id', $userId)->first();
         return response()->json(['loans' => $loans, 'sum' => $sum, 'user' => $user], 200);
     }
 }

@@ -2,7 +2,7 @@
 
 
     <div class="app-brand demo ">
-        <a href="{{route('dashboard')}}" class="app-brand-link">
+        <a href="{{ route('dashboard') }}" class="app-brand-link">
             <span class="app-brand-logo demo">
 
                 <svg width="25" viewBox="0 0 25 42" version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -90,11 +90,7 @@
                         <div data-i18n="Without navbar">{{ __('menu.Loan') }}</div>
                     </a>
                 </li>
-                <li class="menu-item">
-                    <a href="layouts-container.html" class="menu-link">
-                        <div data-i18n="Container">{{ __('menu.Service') }}</div>
-                    </a>
-                </li>
+
             </ul>
         </li>
 
@@ -121,7 +117,7 @@
             </a>
             <ul class="menu-sub">
                 <li class="menu-item">
-                    <a href="auth-register-basic.html" class="menu-link" target="_blank">
+                    <a href="{{route('user.view-change-password')}}" class="menu-link" target="_blank">
                         <div data-i18n="Basic">{{ __('menu.Forgot_password') }}</div>
                     </a>
                 </li>
@@ -133,20 +129,28 @@
             </ul>
         </li>
         <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-cube-alt"></i>
-                <div data-i18n="Misc">{{ __('menu.Settings') }}</div>
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-layout"></i>
+                <div data-i18n="Layouts">{{ __('menu.Settings') }}</div>
             </a>
+
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a href="{{ route('logo.index') }}" class="menu-link">
+                        <div data-i18n="Container">{{ __('menu.Logo') }}</div>
+                    </a>
+                </li>
+            </ul>
         </li>
-        <!-- Misc -->
-        <li class="menu-header small text-uppercase"><span class="menu-header-text">Hỗ trợ</span></li>
-        <li class="menu-item">
-            <a href="https://github.com/themeselection/sneat-html-admin-template-free/issues" target="_blank"
-                class="menu-link">
-                <i class="menu-icon tf-icons bx bx-support"></i>
-                <div data-i18n="Support">{{ __('menu.Support') }}</div>
-            </a>
-        </li>
-    </ul>
+                <!-- Misc -->
+                <li class="menu-header small text-uppercase"><span class="menu-header-text">Hỗ trợ</span></li>
+                <li class="menu-item">
+                    <a href="https://github.com/themeselection/sneat-html-admin-template-free/issues" target="_blank"
+                        class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-support"></i>
+                        <div data-i18n="Support">{{ __('menu.Support') }}</div>
+                    </a>
+                </li>
+            </ul>
 
 </aside>

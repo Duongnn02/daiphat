@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\UploadFileTrait;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\File;
 
 class AuthController extends Controller
 {
@@ -60,13 +62,29 @@ class AuthController extends Controller
 
     public function uploadCmnd(Request $request, $id)
     {
-        // $validated = $request->validate([
-        //     'name' => 'required',
-        //     'cccd_cmnd' => 'required',
-        //     'before_cccd_cmnd' => 'required',
-        //     'after_cccd_cmnd' => 'required',
-        //     'face_cccd_cmnd' => 'required',
-        // ]);
+        $validated = $request->validate([
+            'name' => 'required',
+            'cccd_cmnd' => 'required',
+            'before_cccd_cmnd' => [
+                'required', File::image()
+                    ->min(1024)
+                    ->max(12 * 1024)
+                    ->dimensions(Rule::dimensions()->maxWidth(1000)->maxHeight(500)),
+            ],
+            'after_cccd_cmnd' => [
+                'required', File::image()
+                    ->min(1024)
+                    ->max(12 * 1024)
+                    ->dimensions(Rule::dimensions()->maxWidth(1000)->maxHeight(500)),
+            ],
+            'face_cccd_cmnd' => [
+                'required',
+                File::image()
+                    ->min(1024)
+                    ->max(12 * 1024)
+                    ->dimensions(Rule::dimensions()->maxWidth(1000)->maxHeight(500)),
+            ],
+        ]);
         $user = User::findOrFail($id);
 
         if ($request->hasFile('before_cccd_cmnd')) {
@@ -101,14 +119,14 @@ class AuthController extends Controller
         ]);
 
         $user = Auth::user();
-            if (Hash::check($request->current_password, $user->password)) {
-                User::whereId(auth()->user()->id)->update([
-                    'password' => Hash::make($request->new_password)
-                ]);
+        if (Hash::check($request->current_password, $user->password)) {
+            User::whereId(auth()->user()->id)->update([
+                'password' => Hash::make($request->new_password)
+            ]);
 
-                return response()->json(['user' => $user, 'message' => 'Thay đổi thành công vui lòng đăng nhập lại']);
-            } else {
-                return response()->json(['message' => 'mật khẩu không chính xác']);
-            }
+            return response()->json(['user' => $user, 'message' => 'Thay đổi thành công vui lòng đăng nhập lại']);
+        } else {
+            return response()->json(['message' => 'mật khẩu không chính xác']);
+        }
     }
 }

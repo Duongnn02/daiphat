@@ -10,9 +10,12 @@ use Illuminate\Database\Eloquent\Model;
 class LoanPackage extends Model
 {
     use HasFactory;
-    protected $fillable = ['user_id', 'total_loan', 'time', 'status', 'recurring_payment', 'contract_number'];
+    protected $fillable = ['user_id', 'total_loan', 'time', 'status', 'recurring_payment', 'contract_number', 'viewed'];
     protected $table = 'loan_package';
-
+    const APPROVAL = 2;
+    const REJECT = 1;
+    const PENDING = 0;
+    const VIEWED = 1;
     public function CreatedAt(): Attribute {
         return new Attribute(
             get: fn ($value) =>  Carbon::parse($value)->format('m/d/Y'),

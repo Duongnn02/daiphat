@@ -41,6 +41,8 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::get('messages', [MessageController::class, 'index']);
 
     Route::get('loan/{id}', [LoanPackageController::class, 'show']);
+    Route::get('loan-approved', [LoanPackageController::class, 'approved']);
+    Route::get('viewed', [LoanPackageController::class, 'viewed']);
     Route::post('loan-store', [LoanPackageController::class, 'store']);
     Route::get('get-money-loan/{id}', [LoanPackageController::class, 'getMoneyLoan']);
 

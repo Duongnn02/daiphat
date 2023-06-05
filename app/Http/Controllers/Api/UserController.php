@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -36,6 +37,7 @@ class UserController extends Controller
             }
             return response()->json(['data' => $user, 'message' => 'Hoàn thành'], 200);
         } catch (Exception $e) {
+            Log::error($e->getMessage());
             return response('Thêm thất bại', 400);
         }
     }

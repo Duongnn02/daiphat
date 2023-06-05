@@ -60,8 +60,17 @@ class LoanPackageController extends Controller
             'recurring_payment',
             'contract_number',
         ];
+        $userId = Auth::user()->id;
+        $isPending = $this->model->where('user_id', $userId)
+            ->where('status', LoanPackage::PENDING)
+            ->exists();
+
+        if ($isPending) {
+            return response()->json(['message' => 'Bạn có khoản vay chưa được duyệt, vui lòng liên hệ bộ phận hỗ trợ'], 401);
+        }
+
         $data = $request->only($input);
-        $data['user_id'] = Auth::user()->id;
+        $data['user_id'] = $userId;
         $data['contract_number'] = rand(1111111111, 9999999999);
         $loans = LoanPackage::create($data);
         return response()->json(['loans' => $loans, 'message' => 'success'], 200);
@@ -129,6 +138,7 @@ class LoanPackageController extends Controller
         ]);
         return back()->with('message', 'cập nhật thành công');
     }
+
     public function reject($id)
     {
         $loan = LoanPackage::findOrFail($id);
@@ -157,5 +167,44 @@ class LoanPackageController extends Controller
         }
         $user = User::where('id', $userId)->first();
         return response()->json(['loans' => $loans, 'sum' => $sum, 'user' => $user], 200);
+    }
+
+    public function approved()
+    {
+        $userId = Auth::user()->id;
+        $loan = LoanPackage::where('user_id', $userId)
+            ->where('status', LoanPackage::APPROVALED)
+            ->where('viewed', '!=', LoanPackage::VIEWED)
+            ->first();
+
+        if (empty($loan)) {
+            return response()->json(['message' => 'Not found'], 400);
+        }
+
+        $isApproval = $loan->exists();
+        if ($isApproval) {
+            $message = 'Khoản vay đã được duyệt';
+            return response()->json(['message' => $message, 'loan' => $loan], 200);
+        }
+    }
+
+    public function viewed()
+    {
+        $userId = Auth::user()->id;
+        $loan = LoanPackage::where('user_id', $userId)
+            ->where('status', LoanPackage::APPROVALED)
+            ->where('viewed', '!=', LoanPackage::VIEWED)
+            ->first();
+        if (empty($loan)) {
+            return response()->json(['message' => 'Not found'], 400);
+        }
+
+        $isApproval = $loan->exists();
+        if ($isApproval) {
+            $loan->update([
+                'viewed' => LoanPackage::VIEWED
+            ]);
+            return response()->json(['message' => 'Đã xem', 'loan' => $loan], 200);
+        }
     }
 }

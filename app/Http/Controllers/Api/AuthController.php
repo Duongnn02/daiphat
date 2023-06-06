@@ -84,23 +84,13 @@ class AuthController extends Controller
             'name' => 'required',
             'cccd_cmnd' => 'required',
             'before_cccd_cmnd' => [
-                'required', File::image()
-                    ->min(1024)
-                    ->max(12 * 1024)
-                    ->dimensions(Rule::dimensions()->maxWidth(1000)->maxHeight(500)),
+                'required'
             ],
             'after_cccd_cmnd' => [
-                'required', File::image()
-                    ->min(1024)
-                    ->max(12 * 1024)
-                    ->dimensions(Rule::dimensions()->maxWidth(1000)->maxHeight(500)),
+                'required'
             ],
             'face_cccd_cmnd' => [
-                'required',
-                File::image()
-                    ->min(1024)
-                    ->max(12 * 1024)
-                    ->dimensions(Rule::dimensions()->maxWidth(1000)->maxHeight(500)),
+                'required'
             ],
         ]);
         $user = User::findOrFail($id);

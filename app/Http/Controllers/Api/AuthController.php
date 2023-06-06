@@ -39,25 +39,43 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = request(['phone', 'password']);
-        if (Auth::attempt($credentials)) {
-            $user = Auth::user();
-            $tokenResult = $user->createToken('Myapp');
-            $token = $tokenResult->token;
-            if ($request->remember_me)
-                $token->expires_at = Carbon::now()->addWeeks(1);
-            $token->save();
+        try {
+            $request->validate([
+                'phone' => 'required',
+                'password' => 'required'
+            ]);
+
+            $credentials = request(['phone', 'password']);
+
+            if (!Auth::attempt($credentials)) {
+                return response()->json([
+                    'status_code' => 500,
+                    'message' => 'Unauthorized'
+                ]);
+            }
+
+            $user = User::where('phone', $request->phone)->first();
+
+            if (!Hash::check($request->password, $user->password, [])) {
+                throw new \Exception('Error in Login');
+            }
+
+            $tokenResult = $user->createToken('authToken')->plainTextToken;
+
             return response()->json([
                 'user' => $user,
-                'access_token' => $tokenResult->accessToken,
+                'status_code' => 200,
+                'access_token' => $tokenResult,
                 'token_type' => 'Bearer',
-                'expires_at' => Carbon::parse(
-                    $tokenResult->token->expires_at
-                )->toDateTimeString()
-            ], 200);
-        } else {
-            return response()->json(['error' => 'Unauthorised'], 400);
+            ]);
+        } catch (\Exception $error) {
+            return response()->json([
+                'status_code' => 500,
+                'message' => 'Error in Login',
+                'error' => $error,
+            ]);
         }
+
     }
 
     public function uploadCmnd(Request $request, $id)

@@ -16,16 +16,13 @@ class UserSeeder extends Seeder
         $data = [
             'name' => 'admin',
             'email' => 'admin@gmail.com',
-            'password' => bcrypt(12345678),
+            'phone' => '0123456789',
+            'password' => bcrypt(123456789),
             'role_id' => User::IS_ADMIN,
         ];
 
-        $users = User::get();
-        foreach ($users as $user) {
-            $user = User::where('email', 'admin@gmail.com')->exists();
-            if ($user) {
-                continue;
-            }
+        $user = User::where('email', 'admin@gmail.com')->exists();
+        if (!$user) {
             User::create($data);
         }
     }

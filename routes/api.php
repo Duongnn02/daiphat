@@ -20,15 +20,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-Route::post('register', [AuthController::class, 'register']);
-Route::get('data-customer', [FakeDataController::class, 'index']);
-Route::post('login', [AuthController::class, 'login']);
-
-Route::get('getMoneyLoan/{id}', [LoanPackageController::class, 'getMoneyLoan']);
-Route::group(['middleware' => ['auth:api']], function () {
+Route::middleware('auth:sanctum')->group(function () {
     Route::post('uploadCmnd/{id}', [AuthController::class, 'uploadCmnd']);
     Route::post('change-password', [AuthController::class, 'changePassword']);
 
@@ -47,5 +39,9 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::get('get-money-loan/{id}', [LoanPackageController::class, 'getMoneyLoan']);
 
     Route::get('get-logo', [LogoController::class, 'getLogo']);
-
 });
+Route::post('register', [AuthController::class, 'register']);
+Route::get('data-customer', [FakeDataController::class, 'index']);
+Route::post('login', [AuthController::class, 'login']);
+
+Route::get('getMoneyLoan/{id}', [LoanPackageController::class, 'getMoneyLoan']);

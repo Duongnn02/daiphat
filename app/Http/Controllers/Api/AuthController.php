@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Enums\CodeStatusEnum;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Carbon\Carbon;
@@ -34,7 +35,7 @@ class AuthController extends Controller
         ]);
     }
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
         $credentials = request(['phone', 'password']);
 
@@ -50,7 +51,7 @@ class AuthController extends Controller
             ]);
 
         } else {
-            return response()->json(['error' => 'Unauthorised'], 400);
+            return response()->json(['error' => 'Số điện thoại hoặc password chưa đúng'], 400);
         }
     }
 

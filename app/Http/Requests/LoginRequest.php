@@ -7,11 +7,9 @@ use Illuminate\Contracts\Validation\Validator as ValidationValidator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
 
-class RegisterRequest extends FormRequest
+class LoginRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,17 +27,15 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'phone' => 'required|unique:users,phone|min:8|numeric',
+            'phone' => 'required|min:8|numeric',
             'password' => 'required|min:6',
         ];
     }
-
 
     public function messages()
     {
         return [
             'phone.required'       => 'Số điện thoại không được để trống',
-            'phone.unique'       => 'Số điện thoại đã tồn tại',
             'phone.min'       => 'Số điện thoại không nhỏ hơn 8 số',
             'phone.numeric'       => 'Số điện thoại phải là số',
             'password.required'       => 'Mật khẩu không được để trống',

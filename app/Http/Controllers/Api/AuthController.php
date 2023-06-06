@@ -24,42 +24,22 @@ class AuthController extends Controller
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
 
-        $tokenResult = $user->createToken('Myapp');
-        $token = $tokenResult->token;
+        $tokenResult = $user->createToken('authToken')->plainTextToken;
 
         return response()->json([
             'user' => $user,
-            'access_token' => $tokenResult->accessToken,
+            'status_code' => 200,
+            'access_token' => $tokenResult,
             'token_type' => 'Bearer',
-            'expires_at' => Carbon::parse(
-                $tokenResult->token->expires_at
-            )->toDateTimeString()
-        ], 200);
+        ]);
     }
 
     public function login(Request $request)
     {
-        try {
-            $request->validate([
-                'phone' => 'required',
-                'password' => 'required'
-            ]);
+        $credentials = request(['phone', 'password']);
 
-            $credentials = request(['phone', 'password']);
-
-            if (!Auth::attempt($credentials)) {
-                return response()->json([
-                    'status_code' => 500,
-                    'message' => 'Unauthorized'
-                ]);
-            }
-
-            $user = User::where('phone', $request->phone)->first();
-
-            if (!Hash::check($request->password, $user->password, [])) {
-                throw new \Exception('Error in Login');
-            }
-
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
             $tokenResult = $user->createToken('authToken')->plainTextToken;
 
             return response()->json([
@@ -68,14 +48,10 @@ class AuthController extends Controller
                 'access_token' => $tokenResult,
                 'token_type' => 'Bearer',
             ]);
-        } catch (\Exception $error) {
-            return response()->json([
-                'status_code' => 500,
-                'message' => 'Error in Login',
-                'error' => $error,
-            ]);
-        }
 
+        } else {
+            return response()->json(['error' => 'Unauthorised'], 400);
+        }
     }
 
     public function uploadCmnd(Request $request, $id)
@@ -119,7 +95,8 @@ class AuthController extends Controller
         return response()->json(['data' => $user, 'message' => 'Hoàn thành'], 200);
     }
 
-    public function changePassword(Request $request)
+    public
+    function changePassword(Request $request)
     {
         $request->validate([
             'current_password' => 'required',

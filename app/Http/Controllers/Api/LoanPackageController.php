@@ -207,4 +207,39 @@ class LoanPackageController extends Controller
             return response()->json(['message' => 'Đã xem', 'loan' => $loan], 200);
         }
     }
+
+    public function handleWithdrawl($id)
+    {
+        $loan = $this->model->findOrFail($id);
+
+        if (empty($loan)) {
+            return response()->json(['message' => 'Not found'], 400);
+        }
+
+        $loan->update([
+            'type' => LoanPackage::PENDING
+        ]);
+
+        return response()->json(['message' => 'Đang chờ xử lý', 'loan' => $loan], 200);
+
+    }
+
+    public function ApprovalWithdrawl($id)
+    {
+        $loan = $this->model->findOrFail($id);
+
+        if (empty($loan)) {
+            return response()->json(['message' => 'Not found'], 400);
+        }
+
+        $type = match ($loan->type) {
+            LoanPackage::PENDING =>  false,
+            LoanPackage::WATTING => LoanPackage::APPROVAL,
+        };
+
+        $loan->update([
+            'type' => LoanPackage::APPROVAL
+        ]);
+        return response()->json(['message' => 'Đang chờ xử lý', 'loan' => $loan], 200);
+    }
 }

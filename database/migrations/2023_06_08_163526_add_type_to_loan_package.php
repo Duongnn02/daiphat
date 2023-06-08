@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('loan_package', function (Blueprint $table) {
-            //
+            $table->tinyInteger('type')->default(0)->comment('0:chưa duyệt, 1: đã duyệt rút, 2: từ chối, 3 đang chờ xử lý' );
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('loan_package', function (Blueprint $table) {
-            //
+            $table->dropColumn('type');
         });
     }
 };

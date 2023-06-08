@@ -15,6 +15,7 @@ class LoanPackage extends Model
     const APPROVAL = 2;
     const REJECT = 1;
     const PENDING = 0;
+    const WATTING = 3;
     const VIEWED = 1;
     public function CreatedAt(): Attribute {
         return new Attribute(

@@ -61,13 +61,13 @@ class AuthController extends Controller
             'name' => 'required',
             'cccd_cmnd' => 'required',
             'before_cccd_cmnd' => [
-                'required'
+                'required', 'mimes:jpeg,jpg,png,gif|required|max:10000'
             ],
             'after_cccd_cmnd' => [
-                'required'
+                'required', 'mimes:jpeg,jpg,png,gif|required|max:10000'
             ],
             'face_cccd_cmnd' => [
-                'required'
+                'required','mimes:jpeg,jpg,png,gif|required|max:10000'
             ],
         ]);
         $user = User::findOrFail($id);

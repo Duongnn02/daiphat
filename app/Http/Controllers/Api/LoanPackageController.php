@@ -157,8 +157,8 @@ class LoanPackageController extends Controller
 
     public function getMoneyLoan($userId)
     {
-        $loans = LoanPackage::where('status', LoanPackage::APPROVALED)
-            ->where('user_id', $userId)
+        $loans = LoanPackage::where('user_id', $userId)
+            ->where('status', LoanPackage::APPROVALED)
             ->get();
 
         $sum = 0;
@@ -217,7 +217,7 @@ class LoanPackageController extends Controller
         }
 
         $loan->update([
-            'type' => LoanPackage::PENDING
+            'type' => LoanPackage::WATTING
         ]);
 
         return response()->json(['message' => 'Đang chờ xử lý', 'loan' => $loan], 200);

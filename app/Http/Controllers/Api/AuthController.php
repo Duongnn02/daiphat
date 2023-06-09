@@ -6,6 +6,7 @@ use App\Enums\CodeStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Models\Logo;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -114,5 +115,11 @@ class AuthController extends Controller
         } else {
             return response()->json(['message' => 'mật khẩu không chính xác']);
         }
+    }
+
+    public function getLogo()
+    {
+        $logo = Logo::latest()->where('status', 1)->first();
+        return view('content.logo.index', compact('logo'));
     }
 }

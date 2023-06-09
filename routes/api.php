@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('uploadCmnd/{id}', [AuthController::class, 'uploadCmnd']);
     Route::post('change-password', [AuthController::class, 'changePassword']);
+    Route::get('get-logo', [AuthController::class, 'getLogo']);
 
     Route::get('user/{id}', [UserController::class, 'show']);
     Route::post('user-store/{id}', [UserController::class, 'storeInfor']);
@@ -33,6 +34,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('messages', [MessageController::class, 'index']);
 
     Route::get('loan/{id}', [LoanPackageController::class, 'show']);
+    Route::get('handle-withdrawl/{id}', [LoanPackageController::class, 'handleWithdrawl']);
     Route::get('loan-approved', [LoanPackageController::class, 'approved']);
     Route::get('viewed', [LoanPackageController::class, 'viewed']);
     Route::post('loan-store', [LoanPackageController::class, 'store']);

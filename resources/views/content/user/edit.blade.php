@@ -162,7 +162,7 @@
                                     </div>
                                     <br>
                                     <div class="row">
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label for="image">Ảnh mặt trước</label><br>
                                                 <div class="card_file_name">
@@ -171,12 +171,12 @@
                                                             class="form-control file before_cccd_cmnd">
                                                     </div>
                                                     <div class="card-img">
-                                                        <img id="before_cccd_cmnd" class="rounded image_show w-100" src="">
+                                                        <img id="before_cccd_cmnd" class="rounded image_show w-100" src="{{asset($user->before_cccd_cmnd)}}">
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label for="image">Ảnh mặt sau</label><br>
                                                 <div class="card_file_name">
@@ -185,12 +185,12 @@
                                                             class="form-control after_cccd_cmnd ">
                                                     </div>
                                                     <div class="card-img">
-                                                        <img id="after_cccd_cmnd" class="rounded image_show w-100" src="">
+                                                        <img id="after_cccd_cmnd" class="rounded image_show w-100" src="{{asset($user->after_cccd_cmnd)}}">
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label for="image">Ảnh chụp mặt và cầm CCCD/CMND</label><br>
                                                 <div class="card_file_name">
@@ -199,7 +199,21 @@
                                                             class="form-control face_cccd_cmnd ">
                                                     </div>
                                                     <div class="card-img">
-                                                        <img id="face_cccd_cmnd" class="rounded image_show w-100" src="">
+                                                        <img id="face_cccd_cmnd" class="rounded image_show w-100" src="{{asset($user->face_cccd_cmnd)}}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label for="image">Thông tin bổ sung</label><br>
+                                                <div class="card_file_name">
+                                                    <div class="form-group form_img  @error('additional_information') border border-danger @enderror">
+                                                        <input type="file" name="additional_information" id="file"
+                                                            class="form-control additional_information ">
+                                                    </div>
+                                                    <div class="card-img">
+                                                        <img id="additional_information" class="rounded image_show w-100" src="{{asset($user->face_cccd_cmnd)}}">
                                                     </div>
                                                 </div>
                                             </div>

@@ -97,8 +97,7 @@ class AuthController extends Controller
         return response()->json(['data' => $user, 'message' => 'Hoàn thành'], 200);
     }
 
-    public
-    function changePassword(Request $request)
+    public function changePassword(Request $request)
     {
         $request->validate([
             'current_password' => 'required',

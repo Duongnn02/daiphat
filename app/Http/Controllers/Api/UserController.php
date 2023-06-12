@@ -8,6 +8,8 @@ use App\Traits\UploadFileTrait;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -85,14 +87,37 @@ class UserController extends Controller
         $user = User::findOrFail($id);
 
         if ($request->hasFile('additional_information')) {
-            $user->additional_information = $this->uploadFile($request->additional_information, 'thong-tin-them');
+            $user->additional_information = $this->uploadFile($request->additional_information, 'thong_tin_them');
         }
         $data = [
             'additional_information' => $user->additional_information
-        ]; 
+        ];
         if ($user->update($data)) {
             $user->update([
                 'status_additional' => 1
+            ]);
+        }
+        return response()->json(['data' => $user, 'message' => 'Hoàn thành'], 200);
+    }
+
+    public function uploadSignature(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        $signature = $request->signature;
+        $folder = 'chu_ky/';
+        if ($signature) {
+            $signature = str_replace('data:image/png;base64,', '', $signature);
+            $signature = str_replace(' ', '+', $signature);
+            $imageName = Str::random(10) . '.png';
+            Storage::disk('local')->put('public/'.$folder.$imageName, base64_decode($signature));
+        }
+        $data = [
+            'signature' => 'storage/' . $folder . $imageName
+        ];
+        if ($user->update($data)) {
+            $user->update([
+                'status_signature' => 1
             ]);
         }
         return response()->json(['data' => $user, 'message' => 'Hoàn thành'], 200);

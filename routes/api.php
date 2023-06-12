@@ -29,6 +29,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('user-store/{id}', [UserController::class, 'storeInfor']);
     Route::post('user-store-bank/{id}', [UserController::class, 'storeBank']);
     Route::post('upload-additional/{id}', [UserController::class, 'uploadAdditional']);
+    Route::post('upload-signature/{id}', [UserController::class, 'uploadSignature']);
 
     Route::post('messages-store', [MessageController::class, 'store']);
     Route::get('messages-show/{id}', [MessageController::class, 'show']);

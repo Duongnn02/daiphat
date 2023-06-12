@@ -25,10 +25,13 @@ class SupportAppController extends Controller
             'app' => 'required',
             'link' => 'required',
         ]);
-
-        SupportApp::create($input);
-
-        return redirect()->route('app.index')->with('message', 'Thêm thành công');
+        try {
+            SupportApp::create($input);
+            return redirect()->route('app.index')->with('message', 'Thêm thành công');
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return back()->with('message', 'Thêm thất bại');
+        }
     }
 
     public function destroy($id)

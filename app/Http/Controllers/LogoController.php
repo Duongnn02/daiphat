@@ -33,8 +33,12 @@ class LogoController extends Controller
         }
 
         Logo::create($input);
-
-        return redirect()->route('logo.index')->with('message', 'Thêm thành công');
+        try {
+            return redirect()->route('logo.index')->with('message', 'Thêm thành công');
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return back()->with('message', 'Thêm thất bại');
+        }
     }
 
     public function destroy($id)

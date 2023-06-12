@@ -5,7 +5,10 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\InforPayController;
 use App\Http\Controllers\LogoController;
+use App\Http\Controllers\SupportAppController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +29,17 @@ Route::middleware(['admin'])->group(function () {
     Route::post('logo-store', [LogoController::class, 'store'])->name('logo.store');
     Route::delete('logo/delete/{id}', [LogoController::class, 'destroy'])->name('logo.destroy');
     Route::get('change-status/{id}', [LogoController::class, 'changeStatus'])->name('logo.change-status');
+
+    Route::get('app-index', [SupportAppController::class, 'index'])->name('app.index');
+    Route::get('app-create', [SupportAppController::class, 'create'])->name('app.create');
+    Route::post('app-store', [SupportAppController::class, 'store'])->name('app.store');
+    Route::delete('app/delete/{id}', [SupportAppController::class, 'destroy'])->name('app.destroy');
+    Route::get('app/change-status/{id}', [SupportAppController::class, 'changeStatus'])->name('app.change-status');
+
+    Route::get('infor-pay-index', [InforPayController::class, 'index'])->name('infor-pay.index');
+    Route::get('infor-pay-create', [InforPayController::class, 'create'])->name('infor-pay.create');
+    Route::post('infor-pay-store', [InforPayController::class, 'store'])->name('infor-pay.store');
+    Route::delete('infor-pay/delete/{id}', [InforPayController::class, 'destroy'])->name('infor-pay.destroy');
 
 
     Route::get('loan-index', [LoanPackageController::class, 'index'])->name('loan.index');

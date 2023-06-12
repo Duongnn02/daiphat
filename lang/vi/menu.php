@@ -13,4 +13,5 @@ return [
     'Forgot_password' => 'Đổi mật khẩu',
     'Create_account' => 'Tạo tài khoản',
     'Support' => 'Hỗ trợ',
+    'InforPay' => 'Tài khoản thanh toán',
 ];

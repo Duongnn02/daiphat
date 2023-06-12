@@ -140,17 +140,21 @@
                         <div data-i18n="Container">{{ __('menu.Logo') }}</div>
                     </a>
                 </li>
+                <li class="menu-item">
+                    <a href="{{ route('infor-pay.index') }}" class="menu-link">
+                        <div data-i18n="Container">{{ __('menu.InforPay') }}</div>
+                    </a>
+                </li>
             </ul>
         </li>
                 <!-- Misc -->
                 <li class="menu-header small text-uppercase"><span class="menu-header-text">Hỗ trợ</span></li>
-                {{-- <li class="menu-item">
-                    <a href="https://github.com/themeselection/sneat-html-admin-template-free/issues" target="_blank"
-                        class="menu-link">
+                <li class="menu-item ">
+                    <a href="{{route('app.index')}}" class="menu-link">
                         <i class="menu-icon tf-icons bx bx-support"></i>
                         <div data-i18n="Support">{{ __('menu.Support') }}</div>
                     </a>
-                </li> --}}
+                </li>
             </ul>
 
 </aside>

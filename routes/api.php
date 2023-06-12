@@ -6,6 +6,8 @@ use App\Http\Controllers\Api\LoanPackageController;
 use App\Http\Controllers\Api\MessageController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\LogoController;
+use App\Http\Controllers\SupportAppController;
+use App\Http\Controllers\InforPayController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +26,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('uploadCmnd/{id}', [AuthController::class, 'uploadCmnd']);
     Route::post('change-password', [AuthController::class, 'changePassword']);
     Route::get('get-logo', [AuthController::class, 'getLogo']);
+    Route::get('get-app', [SupportAppController::class, 'getAppSupport']);
+    Route::get('get-infor-pay', [InforPayController::class, 'getInforPay']);
 
     Route::get('user/{id}', [UserController::class, 'show']);
     Route::post('user-store/{id}', [UserController::class, 'storeInfor']);

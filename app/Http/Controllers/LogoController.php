@@ -66,7 +66,7 @@ class LogoController extends Controller
 
     public function getLogo()
     {
-        $logo = Logo::latest()->first();
+        $logo = Logo::where('status', 1)->latest()->first();
 
         if (empty($logo)) {
             return response()->json('message', 'not found');

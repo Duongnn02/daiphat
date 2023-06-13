@@ -8,9 +8,11 @@ use App\Events\SendMessage;
 use App\Http\Controllers\Controller;
 use App\Models\Message;
 use App\Models\User;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class MessageController extends Controller
 {
@@ -23,9 +25,16 @@ class MessageController extends Controller
             $users = User::whereHas('messages', function ($query) use ($isAdmin) {
                 $query->where('to_user', $isAdmin)
                     ->orWhere('from_user', $isAdmin);
-            })
+            })->with(['messages' => function ($query) use ($isAdmin) {
+                $query->where('to_user', $isAdmin)
+                    ->orWhere('from_user', $isAdmin)
+                    ->latest();
+            }])
                 ->where('role_id', User::IS_USER)
+                // ->orderBy('messages.id', 'DESC')
+                // ->select('users.*')
                 ->get();
+
             return response()->json(['users' => $users], 200);
         }
     }
@@ -79,5 +88,18 @@ class MessageController extends Controller
 
         $user = User::select('id', 'name', 'phone')->where('id', $userId)->first();
         return response()->json(['message' => $message, 'user' => $user], 200);
+    }
+
+    public function deleteAllMessages($userId)
+    {
+        $messages = Message::where('to_user', $userId)
+                    ->orWhere('from_user', $userId)
+                    ->get();
+        if (empty($messages)) {
+            return response()->json(CodeStatusEnum::ERROR, 400);
+        }
+
+        $messages->each->delete();
+        return response()->json(['message' => 'Xóa thành công'], 200);
     }
 }

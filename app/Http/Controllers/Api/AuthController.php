@@ -118,7 +118,11 @@ class AuthController extends Controller
 
     public function getLogo()
     {
-        $logo = Logo::latest()->where('status', 1)->first();
-        return view('content.logo.index', compact('logo'));
+        $logo = Logo::where('status', 1)->latest()->first();
+        if (empty($logo)) {
+            return response()->json('message', 'not found');
+        }
+
+        return response()->json(['logo' => $logo, 'message' => 'success'], 200);
     }
 }

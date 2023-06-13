@@ -68,14 +68,5 @@ class LogoController extends Controller
         return back()->with('message', 'cập nhật thành công');
     }
 
-    public function getLogo()
-    {
-        $logo = Logo::where('status', 1)->latest()->first();
-
-        if (empty($logo)) {
-            return response()->json('message', 'not found');
-        }
-
-        return response()->json(['logo' => $logo, 'message' => 'success']);
-    }
+    
 }

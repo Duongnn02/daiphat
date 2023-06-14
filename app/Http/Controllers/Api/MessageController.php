@@ -25,14 +25,9 @@ class MessageController extends Controller
             $users = User::whereHas('messages', function ($query) use ($isAdmin) {
                 $query->where('to_user', $isAdmin)
                     ->orWhere('from_user', $isAdmin);
-            })->with(['messages' => function ($query) use ($isAdmin) {
-                $query->where('to_user', $isAdmin)
-                    ->orWhere('from_user', $isAdmin)
-                    ->latest();
-            }])
+            })->with(['latestMessage'])
                 ->where('role_id', User::IS_USER)
-                // ->orderBy('messages.id', 'DESC')
-                // ->select('users.*')
+                ->orderByDesc('updated_at')
                 ->get();
 
             return response()->json(['users' => $users], 200);

@@ -75,12 +75,16 @@ class User extends Authenticatable
 
     public function messages()
     {
-        return $this->HasMany(Message::class, 'from_user', 'id');
+        return $this->hasMany(Message::class, 'from_user', 'id');
+    }
+    public function latestMessage()
+    {
+        return $this->hasOne(Message::class, 'to_user', 'id')->latest();
     }
 
     public function loans()
     {
-        return $this->HasMany(LoanPackage::class, 'user_id', 'id');
+        return $this->hasMany(LoanPackage::class, 'user_id', 'id');
     }
 
 

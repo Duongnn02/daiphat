@@ -40,11 +40,15 @@
             <td>{{$user->phone}}</td>
             <td>{{$user->cccd_cmnd}}</td>
             <td>{{$user->email}}</td>
+            @if ($user->role_id != 1)
             <td class="d-flex">
                 <a class="" href="{{route('user.edit', $user->id)}}"><i class="bx bx-edit-alt"></i> </a>
                 <a data-href="{{ route('user.destroy', $user->id) }}" id="{{ $user->id }}"
-                    class="sm deleteIcon"><i class="bx bx-trash"></i></a>
+                    class="sm deleteIcon"><i class="bx bx-trash"></i>
+                </a>
+                <a class="" href="{{ route('user.forget-password', $user->id) }}"><i class="bi bi-lock h4 success"></i></a>
             </td>
+            @endif
         </tr>
         @endforeach
         @endif

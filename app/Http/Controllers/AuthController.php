@@ -23,21 +23,36 @@ class AuthController extends Controller
         ]);
 
         $user = Auth::user();
-            if (Hash::check($request->current_password, $user->password)) {
-                User::whereId(auth()->user()->id)->update([
-                    'password' => Hash::make($request->new_password)
-                ]);
-                $data = ['user' => $user, 'message' => 'Thay đổi thành công vui lòng đăng nhập lại'];
+        if (Hash::check($request->current_password, $user->password)) {
+            User::whereId(auth()->user()->id)->update([
+                'password' => Hash::make($request->new_password)
+            ]);
+            $data = ['user' => $user, 'message' => 'Thay đổi thành công vui lòng đăng nhập lại'];
 
-                Auth::logout();
-                $request->session()->invalidate();
-                $request->session()->regenerateToken();
+            Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
 
-                return redirect()->route('/login');
-            } else {
-                $data = ['message' => 'mật khẩu không chính xác', 'alert' => 'error'];
+            return redirect()->route('/login');
+        } else {
+            $data = ['message' => 'mật khẩu không chính xác', 'alert' => 'error'];
 
-                return back()->with(['data' => $data]);
-            }
+            return back()->with(['data' => $data]);
+        }
+    }
+
+    public function forgetPassword($id)
+    {
+        $user = User::findOrFail($id);
+        if (empty($user)) {
+            $data = ['message' => 'Cập nhật thất bại', 'alert' => 'error'];
+            return back()->with(['data' => $data]);
+        }
+
+        $user->update([
+            'password' => bcrypt(12345678)
+        ]);
+
+        return back()->with(['message' => 'Cập nhật thành công']);
     }
 }

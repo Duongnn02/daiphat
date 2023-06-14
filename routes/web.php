@@ -52,6 +52,7 @@ Route::middleware(['admin'])->group(function () {
     Route::resource('user', UserController::class);
     Route::get('change-password', [AuthController::class, 'viewChangePassword'])->name('user.view-change-password');
     Route::post('change-password', [AuthController::class, 'changePassword'])->name('user.change-password');
+    Route::get('forget-password/{id}', [AuthController::class, 'forgetPassword'])->name('user.forget-password');
 
     Route::get('/', [HomeController::class, 'index'])->name('dashboard');
 });

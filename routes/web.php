@@ -53,7 +53,7 @@ Route::middleware(['admin'])->group(function () {
     Route::get('change-password', [AuthController::class, 'viewChangePassword'])->name('user.view-change-password');
     Route::post('change-password', [AuthController::class, 'changePassword'])->name('user.change-password');
 
-    Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
+    Route::get('/', [HomeController::class, 'index'])->name('dashboard');
 });
 });
 Auth::routes();

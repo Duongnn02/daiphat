@@ -8,12 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 class Message extends Model
 {
     use HasFactory;
+
     protected $fillable = ['from_user', 'to_user', 'message', 'status'];
     protected $table ='messages';
+    protected $touches = ['toUser'];
 
-    public function user()
+    public function fromUser()
     {
         return $this->belongsTo(User::class, 'from_user', 'id');
+    }
+
+    public function toUser()
+    {
+        return $this->belongsTo(User::class, 'to_user', 'id');
     }
 
 }

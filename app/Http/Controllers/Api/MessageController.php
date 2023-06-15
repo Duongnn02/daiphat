@@ -6,8 +6,10 @@ use App\Enums\CodeStatusEnum;
 use App\Events\NewChatMessage;
 use App\Events\SendMessage;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SendMessageRequest;
 use App\Models\Message;
 use App\Models\User;
+use App\Traits\UploadFileTrait;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -16,6 +18,7 @@ use Illuminate\Support\Facades\DB;
 
 class MessageController extends Controller
 {
+    use UploadFileTrait;
     public function index()
     {
         $user = Auth::user();
@@ -34,12 +37,17 @@ class MessageController extends Controller
         }
     }
 
-    public function store(Request $request)
+    public function store(SendMessageRequest $request)
     {
         $message = new Message();
         $message->from_user = Auth::user()->role_id == User::IS_USER ? Auth::id() : User::IS_ADMIN;
         $message->to_user = $request->to_user;
-        $message->message = $request->get('message');
+        if ($request->get('message')) {
+            $message->message = $request->get('message');
+        }
+        if ($request->hasFile('photo')) {
+            $message->photo = $this->uploadFile($request->photo, 'photo');
+        }
         $message->save();
 
         broadcast(new SendMessage($message))->toOthers();

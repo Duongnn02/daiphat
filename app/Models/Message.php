@@ -9,7 +9,7 @@ class Message extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['from_user', 'to_user', 'message', 'status'];
+    protected $fillable = ['from_user', 'to_user', 'message', 'status', 'photo', 'viewed'];
     protected $table ='messages';
     protected $touches = ['toUser'];
 

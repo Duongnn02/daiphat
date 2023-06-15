@@ -79,7 +79,7 @@ class User extends Authenticatable
     }
     public function latestMessage()
     {
-        return $this->hasOne(Message::class, 'to_user', 'id')->latest();
+        return $this->hasOne(Message::class, 'from_user', 'id')->latest();
     }
 
     public function loans()

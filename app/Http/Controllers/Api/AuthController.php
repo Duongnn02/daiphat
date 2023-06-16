@@ -52,7 +52,7 @@ class AuthController extends Controller
             ]);
 
         } else {
-            return response()->json(['error' => 'Số điện thoại hoặc password chưa đúng'], 400);
+            return response()->json(['error' => 'Số điện thoại hoặc mật khẩu chưa đúng'], 400);
         }
     }
 

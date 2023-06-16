@@ -38,6 +38,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('messages-show/{id}', [MessageController::class, 'show']);
     Route::get('messages', [MessageController::class, 'index']);
     Route::delete('messages-delete-all/{id}', [MessageController::class, 'deleteAllMessages']);
+    Route::delete('messages-delete/{id}', [MessageController::class, 'delete']);
 
     Route::get('loan/{id}', [LoanPackageController::class, 'show']);
     Route::get('handle-withdrawl/{id}', [LoanPackageController::class, 'handleWithdrawl']);

@@ -42,9 +42,8 @@ class MessageController extends Controller
         $message = new Message();
         $message->from_user = Auth::user()->role_id == User::IS_USER ? Auth::id() : User::IS_ADMIN;
         $message->to_user = $request->to_user;
-        if ($request->get('message')) {
-            $message->message = $request->get('message');
-        }
+        $message->message = is_null($request->message) ? '' : $request->get('message');
+
         if ($request->hasFile('photo')) {
             $message->photo = $this->uploadFile($request->photo, 'photo');
         }
@@ -103,6 +102,22 @@ class MessageController extends Controller
         }
 
         $messages->each->delete();
+        return response()->json(['message' => 'Xóa thành công'], 200);
+    }
+
+    public function delete($id)
+    {
+        if (Auth::user()->role_id == User::IS_USER)
+        {
+            return response()->json(CodeStatusEnum::ERROR, 400);
+        }
+
+        $message = Message::findOrFail($id);
+        if (empty($message)) {
+            return response()->json(CodeStatusEnum::ERROR, 400);
+        }
+
+        $message->delete();
         return response()->json(['message' => 'Xóa thành công'], 200);
     }
 }

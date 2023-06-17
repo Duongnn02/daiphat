@@ -18,8 +18,8 @@ class AuthController extends Controller
     {
         $request->validate([
             'current_password' => 'required',
-            'new_password' => 'required|string|min:8|same:confirm_password',
-            'confirm_password' => 'required'
+            'new_password' => 'required|string|min:8|same:password_confirmation',
+            'password_confirmation' => 'required'
         ]);
 
         $user = Auth::user();
@@ -33,7 +33,7 @@ class AuthController extends Controller
             $request->session()->invalidate();
             $request->session()->regenerateToken();
 
-            return redirect()->route('/login');
+            return redirect()->route('login');
         } else {
             $data = ['message' => 'mật khẩu không chính xác', 'alert' => 'error'];
 

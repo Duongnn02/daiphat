@@ -26,8 +26,7 @@ class MessageController extends Controller
         $isAdmin = User::IS_ADMIN;
         if ($user->role_id == $isAdmin) {
             $users = User::whereHas('messages', function ($query) use ($isAdmin) {
-                $query->where('to_user', $isAdmin)
-                    ->orWhere('from_user', $isAdmin);
+                $query->where('to_user', $isAdmin);
             })->with(['latestMessage'])
                 ->where('role_id', User::IS_USER)
                 ->orderByDesc('updated_at')

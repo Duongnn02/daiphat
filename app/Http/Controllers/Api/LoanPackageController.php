@@ -155,8 +155,10 @@ class LoanPackageController extends Controller
         return back()->with('message', 'cập nhật thành công');
     }
 
-    public function getMoneyLoan($userId)
+    public function getMoneyLoan()
     {
+        $user = Auth::user();
+        $userId = $user->id;
         $loans = LoanPackage::where('user_id', $userId)
             ->where('status', LoanPackage::APPROVALED)
             ->get();
@@ -216,11 +218,26 @@ class LoanPackageController extends Controller
             return response()->json(['message' => 'Not found'], 400);
         }
 
-        $loan->update([
-            'type' => LoanPackage::WATTING
-        ]);
+        switch ($loan->type) {
+            case LoanPackage::PENDING:
+                $loan->update([
+                    'type' => LoanPackage::WATTING,
+                ]);
+                return response()->json(['message' => 'Rút tiền thành công. Vui lòng liên hệ bộ phận hỗ trợ để được duyệt nhanh hơn', 'loan' => $loan], 200);
+                break;
+            case LoanPackage::WATTING:
+                return response()->json(['message' => 'Khoản vay đang chờ xử lý. Vui lòng liên hệ bộ phận hỗ trợ để được duyệt nhanh hơn', 'loan' => $loan], 200);
+                break;
+            case LoanPackage::REJECT:   
+                return response()->json(['message' => 'Khoản vay đã bị từ chối. Vui lòng liên hệ bộ phận', 'loan' => $loan], 200);
+                break;
+            case LoanPackage::APPROVAL:
+                return response()->json(['message' => 'Khoản vay đã được duyệt', 'loan' => $loan], 200);
+                break;
 
-        return response()->json(['message' => 'Đang chờ xử lý', 'loan' => $loan], 200);
+            default:
+                break;
+        }
 
     }
 

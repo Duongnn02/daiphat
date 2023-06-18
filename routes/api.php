@@ -45,7 +45,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('loan-approved', [LoanPackageController::class, 'approved']);
     Route::get('viewed', [LoanPackageController::class, 'viewed']);
     Route::post('loan-store', [LoanPackageController::class, 'store']);
-    Route::get('get-money-loan/{id}', [LoanPackageController::class, 'getMoneyLoan']);
+    Route::get('get-money-loan', [LoanPackageController::class, 'getMoneyLoan']);
 
 });
 Route::post('register', [AuthController::class, 'register']);

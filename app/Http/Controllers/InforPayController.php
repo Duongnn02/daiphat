@@ -66,7 +66,7 @@ class InforPayController extends Controller
         $inforPay = InforPay::latest()->first();
 
         if (empty($inforPay)) {
-            return response()->json('message', 'not found');
+            return response()->json(['message', 'not found'], 200);
         }
 
         return response()->json(['inforPay' => $inforPay, 'message' => 'success']);

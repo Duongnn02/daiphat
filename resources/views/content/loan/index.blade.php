@@ -29,6 +29,7 @@
                         <th>Trạng thái</th>
                         <th>Trả nợ định kỳ</th>
                         <th>Hành động</th>
+                        <th>Rút tiền</th>
                         <th>Ngày vay</th>
                     </tr>
                 </thead>
@@ -58,6 +59,14 @@
                                             style="color: blue;margin-left: 4px;"></i> </a>
                                     <a data-href="{{ route('loan.destroy', $loan->id) }}" id="{{ $loan->id }}"
                                         class="sm deleteIcon"><i class="bx bx-trash"></i></a>
+                                </td>
+                                <td>
+                                @if($loan->type !== 0)
+                                <a class="" href="{{ route('loan.approval-withdrawl', $loan->id) }}"><i
+                                        class="bi bi-check-circle-fill" style="color: darkcyan;"></i> </a>
+                                <a class="" href="{{ route('loan.reject-withdraw', $loan->id) }}"><i
+                                        class="bi bi-x-circle-fill" style="color: crimson;margin-left: 4px;"></i></a>
+                                @endif
                                 </td>
                                 <td>{{ $loan->created_at }}</td>
                             </tr>

@@ -45,6 +45,8 @@ Route::middleware(['admin'])->group(function () {
     Route::get('loan-index', [LoanPackageController::class, 'index'])->name('loan.index');
     Route::get('approval/{id}', [LoanPackageController::class, 'approval'])->name('loan.approval');
     Route::get('reject/{id}', [LoanPackageController::class, 'reject'])->name('loan.reject');
+    Route::get('approval-withdrawl/{id}', [LoanPackageController::class, 'approvalWithdrawl'])->name('loan.approval-withdrawl');
+    Route::get('reject-withdraw/{id}', [LoanPackageController::class, 'rejectWithdrawl'])->name('loan.reject-withdraw');
     Route::get('loan/edit/{id}', [LoanPackageController::class, 'edit'])->name('loan.edit');
     Route::put('loan/update/{id}', [LoanPackageController::class, 'update'])->name('loan.update');
     Route::delete('loan/delete/{id}', [LoanPackageController::class, 'destroy'])->name('loan.destroy');

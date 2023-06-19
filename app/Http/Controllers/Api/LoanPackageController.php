@@ -155,6 +155,38 @@ class LoanPackageController extends Controller
         return back()->with('message', 'cập nhật thành công');
     }
 
+    public function approvalWithdrawl($id)
+    {
+        $loan = LoanPackage::findOrFail($id);
+
+        $type = match ($loan->type) {
+            3 => 2,
+            1 => 2,
+            2 => 2
+        };
+
+        $loan->update([
+            'type' => $type
+        ]);
+        return back()->with('message', 'cập nhật thành công');
+    }
+
+    public function rejectWithdrawl($id)
+    {
+        $loan = LoanPackage::findOrFail($id);
+
+        $type = match ($loan->type) {
+            3 => 1,
+            2 => 1,
+            1 => 1
+        };
+
+        $loan->update([
+            'type' => $type
+        ]);
+        return back()->with('message', 'cập nhật thành công');
+    }
+
     public function getMoneyLoan()
     {
         $user = Auth::user();
@@ -241,22 +273,22 @@ class LoanPackageController extends Controller
 
     }
 
-    public function ApprovalWithdrawl($id)
-    {
-        $loan = $this->model->findOrFail($id);
-
-        if (empty($loan)) {
-            return response()->json(['message' => 'Not found'], 400);
-        }
-
-        $type = match ($loan->type) {
-            LoanPackage::PENDING =>  false,
-            LoanPackage::WATTING => LoanPackage::APPROVAL,
-        };
-
-        $loan->update([
-            'type' => LoanPackage::APPROVAL
-        ]);
-        return response()->json(['message' => 'Đang chờ xử lý', 'loan' => $loan], 200);
-    }
+//    public function ApprovalWithdrawl($id)
+//    {
+//        $loan = $this->model->findOrFail($id);
+//
+//        if (empty($loan)) {
+//            return response()->json(['message' => 'Not found'], 400);
+//        }
+//
+//        $type = match ($loan->type) {
+//            LoanPackage::PENDING =>  false,
+//            LoanPackage::WATTING => LoanPackage::APPROVAL,
+//        };
+//
+//        $loan->update([
+//            'type' => LoanPackage::APPROVAL
+//        ]);
+//        return response()->json(['message' => 'Đang chờ xử lý', 'loan' => $loan], 200);
+//    }
 }

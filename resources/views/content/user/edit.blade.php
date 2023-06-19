@@ -162,7 +162,7 @@
                                     </div>
                                     <br>
                                     <div class="row">
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-4">
                                             <div class="form-group">
                                                 <label for="image">Ảnh mặt trước</label><br>
                                                 <div class="card_file_name">
@@ -176,7 +176,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-4">
                                             <div class="form-group">
                                                 <label for="image">Ảnh mặt sau</label><br>
                                                 <div class="card_file_name">
@@ -190,7 +190,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-4">
                                             <div class="form-group">
                                                 <label for="image">Ảnh chụp mặt và cầm CCCD/CMND</label><br>
                                                 <div class="card_file_name">
@@ -204,7 +204,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-4">
                                             <div class="form-group">
                                                 <label for="image">Thông tin bổ sung</label><br>
                                                 <div class="card_file_name">
@@ -213,7 +213,21 @@
                                                             class="form-control additional_information ">
                                                     </div>
                                                     <div class="card-img">
-                                                        <img id="additional_information" class="rounded image_show w-100" src="{{asset($user->face_cccd_cmnd)}}">
+                                                        <img id="additional_information" class="rounded image_show w-100" src="{{asset($user->additional_information)}}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label for="image">Chữ ký</label><br>
+                                                <div class="card_file_name">
+                                                    <div class="form-group form_img  @error('signature') border border-danger @enderror">
+                                                        <input type="file" name="signature" id="file"
+                                                               class="form-control signature ">
+                                                    </div>
+                                                    <div class="card-img">
+                                                        <img id="signature" class="rounded image_show w-100" src="{{asset($user->signature)}}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -252,6 +266,20 @@
                             var reader = new FileReader();
                             reader.onload = function(e) {
                                 $('#face_cccd_cmnd').attr('src', e.target.result);
+                            }
+                            reader.readAsDataURL(e.target.files['0']);
+                        });
+                        $('.additional_information').change(function(e) {
+                            var reader = new FileReader();
+                            reader.onload = function(e) {
+                                $('#additional_information').attr('src', e.target.result);
+                            }
+                            reader.readAsDataURL(e.target.files['0']);
+                        });
+                        $('.signature').change(function(e) {
+                            var reader = new FileReader();
+                            reader.onload = function(e) {
+                                $('#signature').attr('src', e.target.result);
                             }
                             reader.readAsDataURL(e.target.files['0']);
                         });

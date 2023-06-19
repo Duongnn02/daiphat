@@ -228,8 +228,8 @@ class LoanPackageController extends Controller
             case LoanPackage::WATTING:
                 return response()->json(['message' => 'Khoản vay đang chờ xử lý. Vui lòng liên hệ bộ phận hỗ trợ để được duyệt nhanh hơn', 'loan' => $loan], 200);
                 break;
-            case LoanPackage::REJECT:   
-                return response()->json(['message' => 'Khoản vay đã bị từ chối. Vui lòng liên hệ bộ phận', 'loan' => $loan], 200);
+            case LoanPackage::REJECT:
+                return response()->json(['message' => 'Khoản vay đã bị từ chối. Quý khách vui lòng liên hệ CSKH để được hỗ trợ', 'loan' => $loan], 200);
                 break;
             case LoanPackage::APPROVAL:
                 return response()->json(['message' => 'Khoản vay đã được duyệt', 'loan' => $loan], 200);

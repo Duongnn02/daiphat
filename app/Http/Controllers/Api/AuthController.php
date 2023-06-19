@@ -120,7 +120,7 @@ class AuthController extends Controller
     {
         $logo = Logo::where('status', 1)->latest()->first();
         if (empty($logo)) {
-            return response()->json('message', 'not found');
+            return response()->json(['message', 'not found'],  400);
         }
 
         return response()->json(['logo' => $logo, 'message' => 'success'], 200);

@@ -43,6 +43,7 @@
             @if ($user->role_id != 1)
             <td class="d-flex">
                 <a class="" href="{{route('user.edit', $user->id)}}"><i class="bx bx-edit-alt"></i> </a>
+                <a class="" href="{{route('user.show', $user->id)}}"><i class="bi bi-eye"></i> </a>
                 <a data-href="{{ route('user.destroy', $user->id) }}" id="{{ $user->id }}"
                     class="sm deleteIcon"><i class="bx bx-trash"></i>
                 </a>

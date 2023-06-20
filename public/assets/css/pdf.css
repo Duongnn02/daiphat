@@ -1,0 +1,18 @@
+.card {
+    font: normal 13px/1.4em 'charis silb', 'Charis silb';
+}
+.card-header {
+    font-size: 20px;
+    text-align: center;
+}
+.contract, .date {
+    text-align: center;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td {
+    text-align: left;
+}

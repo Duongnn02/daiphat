@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use PHPUnit\Event\TestSuite\Loaded;
+use PDF;
 
 class LoanPackageController extends Controller
 {
@@ -271,6 +271,20 @@ class LoanPackageController extends Controller
                 break;
         }
 
+    }
+
+    public function readContract($id)
+    {
+        $loan = $this->model->findOrFail($id);
+        $data = [
+            'title' => 'Hợp đồng tín dụng',
+            'loan' => $loan,
+            'user' => Auth::user()
+        ];
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadView('content.loan.contract', $data);
+        return $pdf->stream('contract.pdf');
+//        return view('content.loan.contract');
     }
 
 //    public function ApprovalWithdrawl($id)

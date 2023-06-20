@@ -1,0 +1,38 @@
+{
+    "corinthia-bold": {
+        "normal": "C:\\laragon\\www\\Test\\daiphat\\vendor\\dompdf\\dompdf\/lib\/fonts\/Corinthia-Bold",
+        "bold": "C:\\laragon\\www\\Test\\daiphat\\vendor\\dompdf\\dompdf\/lib\/fonts\/Corinthia-Bold",
+        "italic": "C:\\laragon\\www\\Test\\daiphat\\vendor\\dompdf\\dompdf\/lib\/fonts\/Corinthia-Bold",
+        "bold_italic": "C:\\laragon\\www\\Test\\daiphat\\vendor\\dompdf\\dompdf\/lib\/fonts\/Corinthia-Bold"
+    },
+    "corinthia-regular": {
+        "normal": "C:\\laragon\\www\\Test\\daiphat\\vendor\\dompdf\\dompdf\/lib\/fonts\/Corinthia-Regular",
+        "bold": "C:\\laragon\\www\\Test\\daiphat\\vendor\\dompdf\\dompdf\/lib\/fonts\/Corinthia-Regular",
+        "italic": "C:\\laragon\\www\\Test\\daiphat\\vendor\\dompdf\\dompdf\/lib\/fonts\/Corinthia-Regular",
+        "bold_italic": "C:\\laragon\\www\\Test\\daiphat\\vendor\\dompdf\\dompdf\/lib\/fonts\/Corinthia-Regular"
+    },
+    "charissilb": {
+        "normal": "C:\\laragon\\www\\Test\\daiphat\\vendor\\dompdf\\dompdf\/lib\/fonts\/CharisSILB",
+        "bold": "C:\\laragon\\www\\Test\\daiphat\\vendor\\dompdf\\dompdf\/lib\/fonts\/CharisSILB",
+        "italic": "C:\\laragon\\www\\Test\\daiphat\\vendor\\dompdf\\dompdf\/lib\/fonts\/CharisSILBi",
+        "bold_italic": "C:\\laragon\\www\\Test\\daiphat\\vendor\\dompdf\\dompdf\/lib\/fonts\/CharisSILB"
+    },
+    "charissilbi": {
+        "normal": "C:\\laragon\\www\\Test\\daiphat\\vendor\\dompdf\\dompdf\/lib\/fonts\/CharisSILBI",
+        "bold": "C:\\laragon\\www\\Test\\daiphat\\vendor\\dompdf\\dompdf\/lib\/fonts\/CharisSILBI",
+        "italic": "C:\\laragon\\www\\Test\\daiphat\\vendor\\dompdf\\dompdf\/lib\/fonts\/CharisSILBI",
+        "bold_italic": "C:\\laragon\\www\\Test\\daiphat\\vendor\\dompdf\\dompdf\/lib\/fonts\/CharisSILBI"
+    },
+    "charissili": {
+        "normal": "C:\\laragon\\www\\Test\\daiphat\\vendor\\dompdf\\dompdf\/lib\/fonts\/CharisSILI",
+        "bold": "C:\\laragon\\www\\Test\\daiphat\\vendor\\dompdf\\dompdf\/lib\/fonts\/CharisSILI",
+        "italic": "C:\\laragon\\www\\Test\\daiphat\\vendor\\dompdf\\dompdf\/lib\/fonts\/CharisSILI",
+        "bold_italic": "C:\\laragon\\www\\Test\\daiphat\\vendor\\dompdf\\dompdf\/lib\/fonts\/CharisSILI"
+    },
+    "charissilr": {
+        "normal": "C:\\laragon\\www\\Test\\daiphat\\vendor\\dompdf\\dompdf\/lib\/fonts\/CharisSILR",
+        "bold": "C:\\laragon\\www\\Test\\daiphat\\vendor\\dompdf\\dompdf\/lib\/fonts\/CharisSILR",
+        "italic": "C:\\laragon\\www\\Test\\daiphat\\vendor\\dompdf\\dompdf\/lib\/fonts\/CharisSILR",
+        "bold_italic": "C:\\laragon\\www\\Test\\daiphat\\vendor\\dompdf\\dompdf\/lib\/fonts\/CharisSILR"
+    }
+}

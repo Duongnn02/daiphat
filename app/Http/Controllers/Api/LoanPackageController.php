@@ -255,21 +255,22 @@ class LoanPackageController extends Controller
                 $loan->update([
                     'type' => LoanPackage::WATTING,
                 ]);
-                return response()->json(['message' => 'Rút tiền thành công. Vui lòng liên hệ bộ phận hỗ trợ để được duyệt nhanh hơn', 'loan' => $loan], 200);
+                $message = 'Rút tiền thành công. Vui lòng liên hệ bộ phận hỗ trợ để được duyệt nhanh hơn';
                 break;
             case LoanPackage::WATTING:
-                return response()->json(['message' => 'Khoản vay đang chờ xử lý. Vui lòng liên hệ bộ phận hỗ trợ để được duyệt nhanh hơn', 'loan' => $loan], 200);
+                $message = 'Khoản vay đang chờ xử lý. Vui lòng liên hệ bộ phận hỗ trợ để được duyệt nhanh hơn';
                 break;
             case LoanPackage::REJECT:
-                return response()->json(['message' => 'Khoản vay đã bị từ chối. Quý khách vui lòng liên hệ CSKH để được hỗ trợ', 'loan' => $loan], 200);
+                $message = 'Khoản vay đã bị từ chối. Quý khách vui lòng liên hệ CSKH để được hỗ trợ';
                 break;
             case LoanPackage::APPROVAL:
-                return response()->json(['message' => 'Khoản vay đã được duyệt', 'loan' => $loan], 200);
+                $message = 'Khoản vay đã được duyệt';
                 break;
 
             default:
                 break;
         }
+        return response()->json(['message' => $message, 'loan' => $loan], 200);
 
     }
 
@@ -284,7 +285,6 @@ class LoanPackageController extends Controller
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadView('content.loan.contract', $data);
         return $pdf->stream('contract.pdf');
-//        return view('content.loan.contract');
     }
 
 //    public function ApprovalWithdrawl($id)

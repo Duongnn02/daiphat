@@ -61,6 +61,8 @@ class AuthController extends Controller
         $validated = $request->validate([
             'name' => 'required',
             'cccd_cmnd' => 'required',
+            'permanent_address' => 'required',
+            'day_of_birthday' => 'required',
             'before_cccd_cmnd' => [
                 'required', 'mimes:jpeg,jpg,png,gif|required|max:10000'
             ],
@@ -85,6 +87,8 @@ class AuthController extends Controller
         $data = [
             'name' => $request->name,
             'cccd_cmnd' => $request->cccd_cmnd,
+            'day_of_birthday' => $request->day_of_birthday,
+            'permanent_address' => $request->permanent_address,
             'before_cccd_cmnd' => $user->before_cccd_cmnd,
             'after_cccd_cmnd' => $user->after_cccd_cmnd,
             'face_cccd_cmnd' => $user->face_cccd_cmnd

@@ -52,7 +52,9 @@ class User extends Authenticatable
         'status_additional',
         'relationship_other',
         'full_name_other',
-        'phone_other'
+        'phone_other',
+        'permanent_address',
+        'day_of_birthday'
     ];
     /**
      * The attributes that should be hidden for serialization.

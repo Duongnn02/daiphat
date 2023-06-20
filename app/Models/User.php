@@ -73,6 +73,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'day_of_birthday' => 'datetime'
     ];
 
     public function messages()

@@ -277,6 +277,9 @@ class LoanPackageController extends Controller
     public function readContract($id)
     {
         $loan = $this->model->findOrFail($id);
+        if (empty($loan)) {
+            return response()->json(['message' => 'Not found'], 400);
+        }
         $data = [
             'title' => 'Hợp đồng tín dụng',
             'loan' => $loan,

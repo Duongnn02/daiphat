@@ -427,7 +427,7 @@
                         </tr>
                         <tr>
                             <td style="padding-left: 40px;">
-                                <img style="width: 100px" alt="" src="{{ storage_path('app/public/con_dau.png') }}" >
+                                <img style="width: 100px" alt="" src="{{public_path('/assets/img/con_dau.png')}}" >
                             </td>
                         </tr>
                     </table>

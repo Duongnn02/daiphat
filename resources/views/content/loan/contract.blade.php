@@ -60,7 +60,7 @@
                             <td>1.1. Họ tên:<b> {{ $loan->user->name }}</b></td>
                         </tr>
                         <tr>
-                            <td>1.2. Ngày sinh: {{$loan->user->day_of_birthday?->format('d/m/Y')}}<b></b></td>
+                            <td>1.2. Ngày sinh: {{$loan->user->day_of_birthday}}<b></b></td>
                             <td> 1.3. Quốc tịch: Việt Nam</td>
                         </tr>
                         <tr>

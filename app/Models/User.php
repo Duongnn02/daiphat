@@ -85,6 +85,14 @@ class User extends Authenticatable
         );
     }
 
+    const RELATIONSHIP = [
+        1 => 'Bố Mẹ',
+        2 => 'Vợ Chồng',
+        3 => 'Đồng nghiệp',
+        4 => 'Anh chị',
+        5 => 'Bạn'
+    ];
+
     public function messages()
     {
         return $this->hasMany(Message::class, 'from_user', 'id');

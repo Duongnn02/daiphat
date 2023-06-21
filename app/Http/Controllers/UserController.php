@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Log;
 class UserController extends Controller
 {
     use UploadFileTrait;
+
     private $model;
     private $listRoute;
 
@@ -52,13 +53,24 @@ class UserController extends Controller
     public function show($id)
     {
         $user = $this->model->findOrFail($id);
+        $relationships = User::RELATIONSHIP;
+
+        foreach ($relationships as $relationship) {
+            if (in_array($user->relationship_family, array_flip($relationships))) {
+                $user->relationship_family = $relationship;
+            }
+            if (in_array($user->relationship_other, array_flip($relationships))) {
+                $user->relationship_other = $relationship;
+            }
+        }
         return view('content.user.show', compact('user'));
     }
 
     public function edit($id)
     {
         $user = $this->model->findOrFail($id);
-        return view('content.user.edit', compact('user'));
+        $relationships = User::RELATIONSHIP;
+        return view('content.user.edit', compact('user', 'relationships'));
     }
 
     public function update(Request $request, $id)
@@ -99,4 +111,5 @@ class UserController extends Controller
             return response()->json($user);
         }
     }
+
 }

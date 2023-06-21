@@ -146,6 +146,88 @@
                                     </div>
                                 </div>
                                 <div class="card-body border-top">
+                                    <legend>Thông tin liên hệ của gia đình</legend>
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Mối quan hệ</label>
+                                                <select class="form-select" aria-label="Default select example" name="relationship_family">
+                                                   @foreach($relationships as $key => $relationship)
+                                                        <option value="{{$key}}" {{$key == $user->relationship_family ? 'selected' : '' }}>{{$relationship}}</option>
+                                                    @endforeach
+                                                </select>
+                                                @error('relationship_family')
+                                                <div class="text text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Họ và tên</label>
+                                                <input name="full_name_family" type="text" value="{{ $user->full_name_family ?? old('full_name_family') }}"
+                                                       id="example-text-input"
+                                                       class="form-control @error('full_name_family') is-invalid @enderror">
+                                                @error('full_name_family')
+                                                <div class="text text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Số điện thoại</label>
+                                                <input name="phone_family" type="number" value="{{ $user->phone_family ?? old('phone_family') }}" id="example-text-input"
+                                                       class="form-control @error('phone_family') is-invalid @enderror">
+                                                @error('phone_family')
+                                                <div class="text text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="card-body border-top">
+                                    <legend>Thông tin liên hệ khác</legend>
+                                    <div class="row">
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Mối quan hệ</label>
+                                                <select class="form-select" aria-label="Default select example" name="relationship_other">
+                                                    @foreach($relationships as $key => $relationship)
+                                                    <option value="{{$key}}" {{$key == $user->relationship_other ? 'selected' : '' }}>{{$relationship}}</option>
+                                                    @endforeach
+                                                </select>
+                                                @error('relationship_other')
+                                                <div class="text text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Họ và tên</label>
+                                                <input name="full_name_other" type="text" value="{{ $user->full_name_other ?? old('full_name_other') }}"
+                                                       id="example-text-input"
+                                                       class="form-control @error('full_name_other') is-invalid @enderror">
+                                                @error('full_name_other')
+                                                <div class="text text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Số điện thoại</label>
+                                                <input name="phone_other" type="number" value="{{ $user->phone_other ?? old('phone_other') }}" id="example-text-input"
+                                                       class="form-control @error('phone_other') is-invalid @enderror">
+                                                @error('phone_other')
+                                                <div class="text text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="card-body border-top">
                                     <legend>Thông tin CMND/CCCD</legend>
                                     <div class="row">
                                         <div class="col-lg-4">

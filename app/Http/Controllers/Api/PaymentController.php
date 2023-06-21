@@ -1,0 +1,49 @@
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use App\Models\Payment;
+use App\Traits\UploadFileTrait;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+
+class PaymentController extends Controller
+{
+    use UploadFileTrait;
+    public function store(Request $request)
+    {
+        $input = [
+            'user_id',
+            'loan_id',
+            'proof',
+            'note'
+        ];
+
+        $data = $request->only($input);
+        $data['user_id'] = Auth::id();
+
+        if ($request->hasFile('proof')) {
+            $data['proof'] = $this->uploadFile($request->proof, 'bang_chung');
+        }
+
+        Payment::create($data);
+        try {
+            return response()->json(['message', 'Thêm thành công'], 200);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return response()->json(['message', 'Thêm thất bại'], 400);
+        }
+    }
+    public function getPayment($loanId)
+    {
+        $payments = Payment::where('loan_id', $loanId)
+            ->get();
+        if (empty($payments)) {
+            return response()->json(['message' => 'Not found'], 400);
+        }
+
+        return response()->json(['payments' => $payments, 'message' => 'thành công'], 200);
+    }
+}

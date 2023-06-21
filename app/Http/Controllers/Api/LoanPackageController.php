@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\LoanPackage;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -67,6 +68,14 @@ class LoanPackageController extends Controller
 
         if ($isPending) {
             return response()->json(['message' => 'Bạn có khoản vay chưa được duyệt, vui lòng liên hệ bộ phận hỗ trợ'], 401);
+        }
+
+        $isLoanExists = $this->model->where('user_id', $userId)
+            ->where('status', LoanPackage::APPROVALED)
+            ->get();
+
+        if (count($isLoanExists) > 0) {
+            return response()->json(['message' => 'Bạn đang có khoản vay tồn tại, vui lòng liên hệ bộ phận hỗ trợ'], 401);
         }
 
         $data = $request->only($input);
@@ -198,6 +207,7 @@ class LoanPackageController extends Controller
         $sum = 0;
         foreach ($loans as $loan) {
             $sum += $loan->total_loan;
+            $date = Carbon::createFromFormat('d/m/Y', $loan->updated_at);
         }
         $user = User::where('id', $userId)->first();
         return response()->json(['loans' => $loans, 'sum' => $sum, 'user' => $user], 200);

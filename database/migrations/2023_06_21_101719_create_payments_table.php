@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('infor_pays', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->string('bank');
-            $table->bigInteger('bank_number');
-            $table->string('account_bank');
-            $table->string('content');
-            $table->string('notification')->nullable();
+            $table->integer('loan_id');
+            $table->integer('user_id');
+            $table->string('proof');
+            $table->tinyInteger('status')->default(0);
+            $table->string('note')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('infor_pays');
+        Schema::dropIfExists('payments');
     }
 };

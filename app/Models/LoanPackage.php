@@ -18,6 +18,18 @@ class LoanPackage extends Model
     const WATTING = 3;
     const VIEWED = 1;
 
+    protected $appends = ['payment_time'];
+
+    public function PaymentTime(): Attribute {
+        return new Attribute(
+            get: fn ($value) =>  Carbon::parse(Carbon::createFromFormat('d/m/Y',$this->updated_at)->addMonths($this->time))->format('d/m/Y'),
+        );
+    }
+    public function UpdatedAt(): Attribute {
+        return new Attribute(
+            get: fn ($value) =>  Carbon::parse($value)->format('d/m/Y'),
+        );
+    }
 
     const APPROVALED = 2;
 

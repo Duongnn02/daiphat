@@ -29,6 +29,8 @@
                         <div class="row">
                             <p class="lead fw-normal mb-1">Thông tin cá nhân</p>
                             <div class="p-4 col-md-5" style="background-color: #f8f9fa;">
+                                <p class="font-italic mb-0">Số điện thoại: {{$user->phone}}</p>
+                                <p class="font-italic mb-0">Ngày sinh: {{$user->day_of_birthday}}</p>
                                 <p class="font-italic mb-1">Số CMND/CCCD: {{$user->cccd_cmnd}}</p>
                                 <p class="font-italic mb-1">Nghề nghiệp: {{$user->academic_level}}</p>
                                 <p class="font-italic mb-0">Email: {{$user->email}}</p>
@@ -41,6 +43,20 @@
                                 <p class="font-italic mb-0">Ngân hàng: {{$user->bank}}</p>
                                 <p class="font-italic mb-0">Phương tiện: {{$user->vehicle}}</p>
                                 <p class="font-italic mb-0">Địa chỉ: {{$user->address}}</p>
+                                <p class="font-italic mb-0">Địa chỉ thường trú: {{$user->permanent_address}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <p class="lead fw-normal mb-1">Thông tin người thân</p>
+                            <div class="p-4 col-md-5" style="background-color: #f8f9fa;">
+                                <p class="font-italic mb-0">Mối quan hệ: {{$user->relationship_family}}</p>
+                                <p class="font-italic mb-1">Họ và tên: {{$user->full_name_family}}</p>
+                                <p class="font-italic mb-1">Số điện thoại: {{$user->phone_family}}</p>
+                            </div>
+                            <div class="p-4 col-md-5" style="background-color: #f8f9fa;">
+                                <p class="font-italic mb-1">Mối quan hệ: {{$user->relationship_other}}</p>
+                                <p class="font-italic mb-1">Họ và tên: {{$user->full_name_other}}</p>
+                                <p class="font-italic mb-0">Số điện thoại: {{$user->phone_other}}</p>
                             </div>
                         </div>
                         <div class="d-flex justify-content-between align-items-center mb-4">

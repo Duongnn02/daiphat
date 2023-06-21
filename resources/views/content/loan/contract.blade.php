@@ -46,7 +46,7 @@
                 <img src="https://vaydaiphat.com/images/4a93f0dda55c5f6d862429781199348f-logo.png" width="100px">
                 <p class="card-header">ĐỀ NGHỊ CẤP TÍN DỤNG KIÊM HỢP ĐỒNG TÍN DỤNG KIÊM THỎA THUẬN SỬ DỤNG DỊCH VỤ ĐIỆN
                     TỬ <br>(“Hợp Đồng”)<br><span><b>Số: {{ $loan->contract_number }} ngày
-                            {{ $loan->updated_at->format('d/m/Y') }}</b></span></p>
+                            {{ $loan->updated_at }}</b></span></p>
             </div>
             <div class="col-md-12">
 
@@ -410,14 +410,14 @@
                         </tr>
                         <tr>
                             <td style="padding-left: 20px;">NHIỆM HỮU HẠN ĐẠI PHÁT</td>
-                            <td style="padding-left: 0px;">Thời gian ký: {{$loan->updated_at->format('d/m/Y') ?? ''}}</td>
+                            <td style="padding-left: 0px;">Thời gian ký: {{$loan->updated_at ?? ''}}</td>
                         </tr>
                         <tr>
                             <td style="padding-left: 20px;">Người đại diện: TRƯƠNG QUỐC HUY</td>
                             <td style="padding-left: 0;">Lý Do: Tôi đồng ý</td>
                         </tr>
                         <tr>
-                            <td style="padding-left: 20px;">Thời gian ký: {{$loan->updated_at->format('d/m/Y') ?? ''}}</td>
+                            <td style="padding-left: 20px;">Thời gian ký: {{$loan->updated_at ?? ''}}</td>
                         </tr>
                         <tr>
                             <td style="padding-left: 20px;">Lý Do: Tôi đồng ý</td>

@@ -17,12 +17,7 @@ class LoanPackage extends Model
     const PENDING = 0;
     const WATTING = 3;
     const VIEWED = 1;
-    public function CreatedAt(): Attribute {
-        return new Attribute(
-            get: fn ($value) =>  Carbon::parse($value)->format('m/d/Y'),
-            set: fn ($value) =>  Carbon::parse($value)->format('Y-m-d'),
-        );
-   }
+
 
     const APPROVALED = 2;
 

@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -75,6 +77,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'day_of_birthday' => 'datetime'
     ];
+
+    public function DayOfBirthday(): Attribute {
+        return new Attribute(
+            get: fn ($value) =>  Carbon::parse($value)->format('Y-m-d'),
+            set: fn ($value) =>  Carbon::parse($value)->format('Y-m-d'),
+        );
+    }
 
     public function messages()
     {

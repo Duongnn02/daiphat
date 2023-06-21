@@ -280,9 +280,12 @@ class LoanPackageController extends Controller
         if (empty($loan)) {
             return response()->json(['message' => 'Not found'], 400);
         }
+        $signature = str_replace('storage/', '', $loan->user->signature);
+
         $data = [
             'title' => 'Hợp đồng tín dụng',
             'loan' => $loan,
+            'signature' => $signature
         ];
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadView('content.loan.contract', $data);

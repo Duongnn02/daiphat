@@ -421,8 +421,13 @@
                         </tr>
                         <tr>
                             <td style="padding-left: 20px;">Lý Do: Tôi đồng ý</td>
-                            <td style="padding-left: 100px; width: 50px">
-                                {{-- <img style="width: 50px" alt="" src="{{asset($loan->user->signature)}}" > --}}
+                            <td style="padding-left: 60px; width: 50px">
+                                 <img style="width: 50px" alt="" src="{{ storage_path('app/public/'.$signature) }}" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 40px;">
+                                <img style="width: 100px" alt="" src="{{ storage_path('app/public/con_dau.png') }}" >
                             </td>
                         </tr>
                     </table>

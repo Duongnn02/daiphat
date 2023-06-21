@@ -283,7 +283,6 @@ class LoanPackageController extends Controller
         $data = [
             'title' => 'Hợp đồng tín dụng',
             'loan' => $loan,
-            'user' => Auth::user()
         ];
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadView('content.loan.contract', $data);

@@ -57,28 +57,28 @@
                     </b>
                     <table class="table table-bordered">
                         <tr>
-                            <td>1.1. Họ tên:<b> {{ $user->name }}</b></td>
+                            <td>1.1. Họ tên:<b> {{ $loan->user->name }}</b></td>
                         </tr>
                         <tr>
-                            <td>1.2. Ngày sinh: {{$user->day_of_birthday->format('d/m/Y')}}<b></b></td>
+                            <td>1.2. Ngày sinh: {{$loan->user->day_of_birthday?->format('d/m/Y')}}<b></b></td>
                             <td> 1.3. Quốc tịch: Việt Nam</td>
                         </tr>
                         <tr>
-                            <td>1.4. Số CMND/Thẻ CCCD/Hộ chiếu/Giấy tờ khác:<b> {{ $user->cccd_cmnd }}</b></td>
+                            <td>1.4. Số CMND/Thẻ CCCD/Hộ chiếu/Giấy tờ khác:<b> {{ $loan->user->cccd_cmnd }}</b></td>
                         </tr>
                         <tr>
-                            <td>1.5. Địa chỉ thường trú:<b> {{ $user->permanent_address }}</b></td>
+                            <td>1.5. Địa chỉ thường trú:<b> {{ $loan->user->permanent_address }}</b></td>
                         </tr>
                         <tr>
-                            <td>1.6. Địa chỉ nơi ở hiện tại:<b> {{ $user->address }}</b></td>
+                            <td>1.6. Địa chỉ nơi ở hiện tại:<b> {{ $loan->user->address }}</b></td>
                         </tr>
                         <tr>
-                            <td>1.7. Điện thoại di động:<b> {{ $user->phone }}</b></td>
-                            <td>1.8. Email:<b> {{ $user->email }}</b></td>
+                            <td>1.7. Điện thoại di động:<b> {{ $loan->user->phone }}</b></td>
+                            <td>1.8. Email:<b> {{ $loan->user->email }}</b></td>
                         </tr>
                         <tr>
-                            <td>1.9. Nghề nghiệp:<b> {{ $user->academic_level }}</b></td>
-                            <td>1.10. Thu nhập:<b> {{ $user->salary }}</b> VNĐ/tháng</td>
+                            <td>1.9. Nghề nghiệp:<b> {{ $loan->user->academic_level }}</b></td>
+                            <td>1.10. Thu nhập:<b> {{ $loan->user->salary }}</b> VNĐ/tháng</td>
                         </tr>
                     </table>
                     <b>
@@ -86,7 +86,7 @@
                     </b>
                     <table class="table table-bordered">
                         <tr>
-                            <td>2.1. Mục đích sử dụng vốn vay: {{ $user->loan_purpose }}</td>
+                            <td>2.1. Mục đích sử dụng vốn vay: {{ $loan->user->loan_purpose }}</td>
                         </tr>
                         <tr>
                             <td>2.2. Số tiền đề nghị vay: <b>{{ number_format($loan->total_loan) }}</b> VNĐ</td>
@@ -210,13 +210,13 @@
                     </b>
                     <table>
                         <tr>
-                            <td>Tên Chủ Tài khoản: <b>{{ $user->account_name }}</b></td>
+                            <td>Tên Chủ Tài khoản: <b>{{ $loan->user->account_name }}</b></td>
                         </tr>
                         <tr>
-                            <td>Số tài khoản: Theo Thông tin do Bên Vay cung cấp <b>{{ $user->number_bank }}</b></td>
+                            <td>Số tài khoản: Theo Thông tin do Bên Vay cung cấp <b>{{ $loan->user->number_bank }}</b></td>
                         </tr>
                         <tr>
-                            <td>Tên Ngân hàng/Bưu cục: Theo Thông tin do Bên Vay cung cấp <b>{{ $user->bank }}</b>
+                            <td>Tên Ngân hàng/Bưu cục: Theo Thông tin do Bên Vay cung cấp <b>{{ $loan->user->bank }}</b>
                             </td>
                         </tr>
                     </table>
@@ -406,23 +406,23 @@
                         </tr>
                         <tr>
                             <td style="padding-left: 20px;">Ký bởi: CÔNG TY TNHH TÀI CHÍNH TRÁCH</td>
-                            <td style="padding-left: 0;">Ký bời: {{$user->name}}</td>
+                            <td style="padding-left: 0;">Ký bời: {{$loan->user->name}}</td>
                         </tr>
                         <tr>
                             <td style="padding-left: 20px;">NHIỆM HỮU HẠN ĐẠI PHÁT</td>
-                            <td style="padding-left: 0px;">Thời gian ký: {{$loan->updated_at->format('d/m/Y')}}</td>
+                            <td style="padding-left: 0px;">Thời gian ký: {{$loan->updated_at->format('d/m/Y') ?? ''}}</td>
                         </tr>
                         <tr>
                             <td style="padding-left: 20px;">Người đại diện: TRƯƠNG QUỐC HUY</td>
                             <td style="padding-left: 0;">Lý Do: Tôi đồng ý</td>
                         </tr>
                         <tr>
-                            <td style="padding-left: 20px;">Thời gian ký: {{$loan->updated_at->format('d/m/Y')}}</td>
+                            <td style="padding-left: 20px;">Thời gian ký: {{$loan->updated_at->format('d/m/Y') ?? ''}}</td>
                         </tr>
                         <tr>
                             <td style="padding-left: 20px;">Lý Do: Tôi đồng ý</td>
                             <td style="padding-left: 100px; width: 50px">
-                                {{-- <img style="width: 50px" alt="" src="{{asset($user->signature)}}" > --}}
+                                {{-- <img style="width: 50px" alt="" src="{{asset($loan->user->signature)}}" > --}}
                             </td>
                         </tr>
                     </table>

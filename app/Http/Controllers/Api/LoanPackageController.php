@@ -88,9 +88,10 @@ class LoanPackageController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show()
     {
-        $loan = $this->model->findOrFail($id);
+        $userId = Auth::user()->id;
+        $loan = $this->model->where('user_id', $userId)->latest()->first();
         return response()->json(['loan' => $loan, 'message' => 'success'], 200);
     }
 

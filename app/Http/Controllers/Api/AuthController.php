@@ -6,13 +6,18 @@ use App\Enums\CodeStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Mail\ForgetPassword;
 use App\Models\Logo;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\UploadFileTrait;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\File;
 
@@ -70,7 +75,7 @@ class AuthController extends Controller
                 'required', 'mimes:jpeg,jpg,png,gif|required|max:10000'
             ],
             'face_cccd_cmnd' => [
-                'required','mimes:jpeg,jpg,png,gif|required|max:10000'
+                'required', 'mimes:jpeg,jpg,png,gif|required|max:10000'
             ],
         ]);
         $user = User::findOrFail($id);
@@ -109,24 +114,73 @@ class AuthController extends Controller
         ]);
 
         $user = Auth::user();
-        if (Hash::check($request->current_password, $user->password)) {
-            User::whereId(auth()->user()->id)->update([
-                'password' => Hash::make($request->new_password)
-            ]);
-
-            return response()->json(['user' => $user, 'message' => 'Thay đổi thành công vui lòng đăng nhập lại']);
-        } else {
-            return response()->json(['message' => 'mật khẩu không chính xác']);
+        if (!Hash::check($request->current_password, $user->password)) {
+            return response()->json(['message' => 'mật khẩu không chính xác'], 400);
         }
+
+        User::whereId(auth()->user()->id)->update([
+            'password' => Hash::make($request->new_password)
+        ]);
+
+        return response()->json(['message' => 'Thay đổi thành công vui lòng đăng nhập lại'], 200);
+
     }
 
     public function getLogo()
     {
         $logo = Logo::where('status', 1)->latest()->first();
         if (empty($logo)) {
-            return response()->json(['message', 'not found'],  400);
+            return response()->json(['message', 'not found'], 400);
         }
 
         return response()->json(['logo' => $logo, 'message' => 'success'], 200);
+    }
+
+    public function forgetPassword(Request $request): JsonResponse
+    {
+        $email = $request->email;
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+        ], [
+            'email.required' => 'Vui lòng điền email',
+            'email.email' => 'Email không đúng định dạng',
+        ]);
+
+        if ($validator->fails()) {
+            return new JsonResponse(['success' => false, 'message' => $validator->errors()], 422);
+        }
+
+        $checkEmailExists = User::where('email', $email)->exists();
+
+        if (!$checkEmailExists) {
+            return new JsonResponse(['success' => false, 'message' => 'Email không tồn tại'], 422);
+        }
+
+        $newPassword = 12345678;
+        $user = User::where('email', $email)->first();
+
+        $user->update([
+            'password' => bcrypt($newPassword)
+        ]);
+
+        try {
+            Mail::to($email)->send(new ForgetPassword($user, $newPassword));
+            return new JsonResponse(
+                [
+                    'message' => 'Đổi mật khẩu thành công',
+                    'success' => true,
+                ],
+                200
+            );
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return new JsonResponse(
+                [
+                    'message' => 'Đổi mật khẩu thất bại',
+                    'success' => false,
+                ],
+                400
+            );
+        }
     }
 }

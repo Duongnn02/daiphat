@@ -66,9 +66,9 @@ class SupportAppController extends Controller
         $app = SupportApp::where('status', 1)->latest()->first();
 
         if (empty($app)) {
-            return response()->json('message', 'not found');
+            return response()->json(['message', 'not found'], 400);
         }
 
-        return response()->json(['app' => $app, 'message' => 'success']);
+        return response()->json(['app' => $app, 'message' => 'success'], 200);
     }
 }

@@ -69,13 +69,13 @@ class AuthController extends Controller
             'permanent_address' => 'required',
             'day_of_birthday' => 'required',
             'before_cccd_cmnd' => [
-                'required', 'mimes:jpeg,jpg,png,gif|required|max:10000'
+                'required', 'mimes:jpeg,jpg,png,gif|required|max:100000'
             ],
             'after_cccd_cmnd' => [
-                'required', 'mimes:jpeg,jpg,png,gif|required|max:10000'
+                'required', 'mimes:jpeg,jpg,png,gif|required|max:100000'
             ],
             'face_cccd_cmnd' => [
-                'required', 'mimes:jpeg,jpg,png,gif|required|max:10000'
+                'required', 'mimes:jpeg,jpg,png,gif|required|max:100000'
             ],
         ]);
         $user = User::findOrFail($id);
@@ -167,7 +167,7 @@ class AuthController extends Controller
             Mail::to($email)->send(new ForgetPassword($user, $newPassword));
             return new JsonResponse(
                 [
-                    'message' => 'Đổi mật khẩu thành công',
+                    'message' => 'Đổi mật khẩu thành công, vui lòng kiểm tra email',
                     'success' => true,
                 ],
                 200

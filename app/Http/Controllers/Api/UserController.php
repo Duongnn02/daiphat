@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Traits\UploadFileTrait;
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class UserController extends Controller
@@ -29,6 +31,16 @@ class UserController extends Controller
 
     public function storeInfor(Request $request, $id)
     {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|unique:users',
+        ], [
+            'email.required' => 'Vui lòng điền email',
+            'email.email' => 'Email không đúng định dạng',
+            'email.unique' => 'Email đã tồn tại',
+        ]);
+        if ($validator->fails()) {
+            return new JsonResponse(['success' => false, 'message' => $validator->errors()], 422);
+        }
         $input = User::getInput($this->model);
         $user = User::findOrFail($id);
 

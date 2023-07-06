@@ -40,7 +40,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('messages-delete-all/{id}', [MessageController::class, 'deleteAllMessages']);
     Route::delete('messages-delete/{id}', [MessageController::class, 'delete']);
 
-    Route::get('loan/{id}', [LoanPackageController::class, 'show']);
+    Route::get('loan-show', [LoanPackageController::class, 'show']);
     Route::get('handle-withdrawl/{id}', [LoanPackageController::class, 'handleWithdrawl']);
     Route::get('loan-approved', [LoanPackageController::class, 'approved']);
     Route::get('viewed', [LoanPackageController::class, 'viewed']);
@@ -48,7 +48,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('get-money-loan', [LoanPackageController::class, 'getMoneyLoan']);
 
     Route::post('payment-store', [\App\Http\Controllers\Api\PaymentController::class, 'store']);
-    Route::get('get-payment/{id}', [\App\Http\Controllers\Api\PaymentController::class, 'getPayment']);
+    Route::get('get-payment', [\App\Http\Controllers\Api\PaymentController::class, 'getPayment']);
 });
 Route::post('register', [AuthController::class, 'register']);
 Route::get('data-customer', [FakeDataController::class, 'index']);
@@ -56,3 +56,4 @@ Route::post('login', [AuthController::class, 'login']);
 Route::get('get-logo', [AuthController::class, 'getLogo']);
 
 Route::get('getMoneyLoan/{id}', [LoanPackageController::class, 'getMoneyLoan']);
+Route::post('forget-password', [AuthController::class, 'forgetPassword']);

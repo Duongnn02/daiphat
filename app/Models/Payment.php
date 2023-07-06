@@ -9,4 +9,9 @@ class Payment extends Model
 {
     use HasFactory;
     protected $fillable = ['user_id', 'loan_id', 'status', 'note', 'proof'];
+
+    public function loan()
+    {
+        return $this->belongsTo(LoanPackage::class, 'loan_id', 'id');
+    }
 }

@@ -75,12 +75,10 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'day_of_birthday' => 'datetime'
     ];
 
     public function DayOfBirthday(): Attribute {
         return new Attribute(
-            get: fn ($value) =>  Carbon::parse($value)->format('Y-m-d'),
             set: fn ($value) =>  Carbon::parse($value)->format('Y-m-d'),
         );
     }

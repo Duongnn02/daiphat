@@ -20,12 +20,6 @@ class AuthController extends Controller
 {
     use UploadFileTrait;
 
-    public function __construct() {
-
-        ini_set('memory_limit', '1G'); // change as needed, as long as your system can support it
-
-   }
-
     public function register(RegisterRequest $request)
     {
         $input = $request->only('phone', 'password');
@@ -64,6 +58,8 @@ class AuthController extends Controller
 
     public function uploadCmnd(Request $request, $id)
     {
+        ini_set('memory_limit', '64M');
+
         $validated = $request->validate([
             'name' => 'required',
             'cccd_cmnd' => 'required',

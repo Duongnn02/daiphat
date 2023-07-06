@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\UploadFileTrait;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\File;
 
@@ -95,12 +96,17 @@ class AuthController extends Controller
             'after_cccd_cmnd' => $user->after_cccd_cmnd,
             'face_cccd_cmnd' => $user->face_cccd_cmnd
         ];
+        try {
         if ($user->update($data)) {
             $user->update([
                 'status_cmnd' => 1
             ]);
         }
         return response()->json(['data' => $user, 'message' => 'Hoàn thành'], 200);
+    } catch (\Exception $e) {
+        Log::error($e->getMessage());
+    }
+
     }
 
     public function changePassword(Request $request)

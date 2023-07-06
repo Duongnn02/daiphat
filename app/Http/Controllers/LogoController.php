@@ -32,8 +32,8 @@ class LogoController extends Controller
             $input['logo'] = $this->uploadFile($request->logo, 'logo');
         }
 
-        Logo::create($input);
         try {
+            Logo::create($input);
             return redirect()->route('logo.index')->with('message', 'Thêm thành công');
         } catch (\Exception $e) {
             Log::error($e->getMessage());
@@ -68,5 +68,5 @@ class LogoController extends Controller
         return back()->with('message', 'cập nhật thành công');
     }
 
-    
+
 }

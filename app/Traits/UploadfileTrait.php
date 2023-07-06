@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -20,7 +21,7 @@ trait UploadFileTrait
             );
 
         } catch (\Exception $e) {
-            report($e);
+            Log::error($e->getMessage());
             return $e->getMessage();
         }
     }

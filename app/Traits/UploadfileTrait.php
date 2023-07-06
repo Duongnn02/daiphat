@@ -12,6 +12,7 @@ trait UploadFileTrait
 {
     public function uploadFile($requestFile, $folder, $disk = 'public', $filename = null)
     {
+        ini_set('memory_limit', '256M');
         try {
             $FileName = !is_null($filename) ? $filename : Str::random(10);
             return 'storage/'. $requestFile->storeAs(

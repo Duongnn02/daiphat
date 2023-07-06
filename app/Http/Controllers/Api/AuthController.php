@@ -69,13 +69,13 @@ class AuthController extends Controller
             'permanent_address' => 'required',
             'day_of_birthday' => 'required',
             'before_cccd_cmnd' => [
-                'required', 'mimes:jpeg,jpg,png,gif|required|max:100000'
+                'required', 'mimes:jpeg,jpg,png,gif|required'
             ],
             'after_cccd_cmnd' => [
-                'required', 'mimes:jpeg,jpg,png,gif|required|max:100000'
+                'required', 'mimes:jpeg,jpg,png,gif|required'
             ],
             'face_cccd_cmnd' => [
-                'required', 'mimes:jpeg,jpg,png,gif|required|max:100000'
+                'required', 'mimes:jpeg,jpg,png,gif|required'
             ],
         ]);
         $user = User::findOrFail($id);

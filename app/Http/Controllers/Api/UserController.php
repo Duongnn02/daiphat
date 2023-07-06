@@ -92,7 +92,7 @@ class UserController extends Controller
     {
         $validated = $request->validate([
             'additional_information' => [
-                'required', 'mimes:jpeg,jpg,png,gif|required|max:10000'
+                'required', 'mimes:jpeg,jpg,png,gif|required'
             ],
         ]);
 

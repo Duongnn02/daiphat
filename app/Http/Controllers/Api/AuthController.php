@@ -24,10 +24,8 @@ class AuthController extends Controller
 
         ini_set('memory_limit', '1G'); // change as needed, as long as your system can support it
 
-        parent::__construct(); // If added in your controller. Probably not needed if you use it in your import class
-
    }
-   
+
     public function register(RegisterRequest $request)
     {
         $input = $request->only('phone', 'password');
